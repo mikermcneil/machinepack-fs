@@ -19,7 +19,8 @@
   },
   "dependencies": {
     "lodash": "~2.4.1",
-    "fs-extra": "~0.10.0"
+    "fs-extra": "~0.10.0",
+    "list-directory-contents": "0.0.2"
   },
   "machinepack": {
     "focus": "fs",
