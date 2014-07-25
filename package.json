@@ -1,6 +1,6 @@
 {
   "name": "machinepack-fs",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Machines for working with the local filesystem.",
   "scripts": {
     "test": "mocha -b"
