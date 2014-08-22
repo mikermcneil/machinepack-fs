@@ -31,7 +31,12 @@ module.exports = {
     }
   },
   fn: function ($i,$x) {
-    ls($i.dir, $x);
+    try {
+      return ls($i.dir, $x);
+    }
+    catch(e){
+      return $x(e);
+    }
   }
 };
 
