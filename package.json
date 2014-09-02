@@ -29,7 +29,9 @@
     "machines": [
       "ls",
       "cp",
-      "rmrf"
+      "rmrf",
+      "template",
+      "write"
     ]
   }
 }
