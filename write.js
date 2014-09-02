@@ -16,10 +16,12 @@ module.exports = {
   description: 'Generate a file on disk using the specified string.',
   inputs: {
     string: {
-      example: 'lots of words, utf8 things you know'
+      example: 'lots of words, utf8 things you know',
+      defaultsTo: ''
     },
     destination: {
-      example: '/Users/mikermcneil/.tmp/bar'
+      example: '/Users/mikermcneil/.tmp/bar',
+      required: true
     },
     force: {
       description: 'overwrite existing file(s)?',
