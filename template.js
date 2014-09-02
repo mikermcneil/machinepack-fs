@@ -94,6 +94,7 @@ module.exports = {
 
       // Finally, write templated string to disk
       writeFileFromStr({
+        force: $i.force,
         string: contents,
         destination: $i.destination
       })
