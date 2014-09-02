@@ -2,8 +2,12 @@
  * Module dependencies
  */
 
+var path = require('path');
 var fsx = require('fs-extra');
 var _ = require('lodash');
+var async = require('async');
+
+
 
 
 module.exports = {
@@ -19,11 +23,6 @@ module.exports = {
     },
     force: {
       description: 'overwrite existing file(s)?',
-      type: 'boolean',
-      defaultsTo: false
-    },
-    dry: {
-      description: 'is this is a dry run?',
       type: 'boolean',
       defaultsTo: false
     }
@@ -44,6 +43,9 @@ module.exports = {
       force: false,
       dry: false
     });
+
+    // Coerce `string` input into an actual string
+    $i.string = $i.string||'';
 
     // In case we ended up here w/ a relative path,
     // resolve it using the process's CWD
@@ -66,7 +68,10 @@ module.exports = {
         function writeToDisk(cb) {
           fsx.outputFile($i.destination, $i.string, cb);
         }
-      ], cb);
+      ], function (err){
+        if (err) return cb(err);
+        return cb();
+      });
 
     });
 

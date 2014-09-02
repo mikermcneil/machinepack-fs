@@ -4,7 +4,7 @@
 
 var fsx = require('fs-extra');
 var _ = require('lodash');
-
+var writeFileFromStr = require('node-machine').build(require('./write'));
 
 
 module.exports = {
@@ -26,6 +26,11 @@ module.exports = {
     },
     destination: {
       example: '/Users/mikermcneil/.tmp/bar'
+    },
+    force: {
+      description: 'overwrite existing file(s)?',
+      type: 'boolean',
+      defaultsTo: false
     }
   },
   exits: {
@@ -45,7 +50,7 @@ module.exports = {
         err.message = 'Template error: ' + err.message;
         err.path = $i.source;
         if (err.code === 'ENOENT') {
-          return $x.noTemplate(err);
+          return ($x.noTemplate||$x.error)(err);
         }
         return $x.error(err);
       }
@@ -62,7 +67,6 @@ module.exports = {
       }
 
       // Finally, write templated string to disk
-      var writeFileFromStr = require('node-machine').build(require('./write'));
       writeFileFromStr({
         string: contents,
         destination: $i.destination
