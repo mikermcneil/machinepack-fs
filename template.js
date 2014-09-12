@@ -32,6 +32,12 @@ module.exports = {
       description: 'overwrite existing file(s)?',
       type: 'boolean',
       defaultsTo: false
+    },
+    options: {
+      description: 'template options (see http://lodash.com/docs#template)',
+      example: {
+        interpolate: /{{([\s\S]+?)}}/g
+      }
     }
   },
   exits: {
@@ -64,7 +70,8 @@ module.exports = {
         return $x.error(err);
       }
       try {
-        contents = _.template(contents, $i.data);
+        var options = $i.options || {};
+        contents = _.template(contents, $i.data, options);
 
         // With lodash teplates, HTML entities are escaped by default.
         // Default assumption is we DON'T want that, so we'll reverse it.
