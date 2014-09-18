@@ -1,25 +1,25 @@
-# machinepack-git
+# machinepack-fs
 
-Machines for working with the `git` command line interface.
-
-**IMPORTANT**: This module requires an accessible `git` in the $PATH to work.
-
+Machines for working with the local filesystem.
 
 ## Installation
 
 ```sh
 $ npm install node-machine
-$ npm install machinepack-git
+$ npm install machinepack-fs
 ```
 
 ## Basic Usage
 
 ```javascript
-var M = require('node-machine');
+var Filesystem = require('machinepack-fs');
 
-M.require('machinepack-git/'+MACHINE_ID_HERE)
-.configure(INPUT_VALUES_HERE)
-.exec(EXIT_HANDER_HERE);
+Filesystem.ls({
+  dir: '/blah/foo/bar'
+})
+.exec(function (err, result) {
+  // ...
+});
 ```
 
 For more info about working with machines, see the [node-machine repo](http://github.com/mikermcneil/node-machine).
