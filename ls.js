@@ -14,7 +14,13 @@ module.exports = {
   transparent: true,
   inputs: {
     dir: {
-      example: '/Users/mikermcneil/.tmp/foo'
+      example: '/Users/mikermcneil/.tmp/foo',
+      required: true
+    },
+    depth: {
+      description: 'The maximum number of "hops" (i.e. directories deep) to include directory contents from.  For instance, if you are running `ls` on "foo/" which has a subdirectory "foo/bar/baz/", if `depth` is set to 2, the results will include "foo/bar/baz/", but none of the files/folders contained within.',
+      example: 2,
+      defaultsTo: 1000
     }
   },
   exits: {
@@ -32,6 +38,10 @@ module.exports = {
   },
   fn: function ($i,$x) {
     try {
+      if (typeof $i.depth !== 'undefined') {
+        return $x.error('`depth` input is not supported yet!  Please consider contributing :)');
+      }
+
       return ls($i.dir, $x);
     }
     catch(e){
