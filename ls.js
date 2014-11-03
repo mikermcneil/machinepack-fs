@@ -8,10 +8,8 @@ var ls = require('list-directory-contents');
 
 
 module.exports = {
-  id: 'ls',
-  moduleName: 'machinepack-fs',
   description: 'List directory contents',
-  transparent: true,
+  noSideEffects: true,
   inputs: {
     dir: {
       example: '/Users/mikermcneil/.tmp/foo',
