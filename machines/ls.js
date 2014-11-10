@@ -1,15 +1,10 @@
-/**
- * Module dependencies
- */
-
-var ls = require('list-directory-contents');
-
-
-
-
 module.exports = {
+
+  identity: 'ls',
+  friendlyName: 'ls',
   description: 'List directory contents',
-  noSideEffects: true,
+  cacheable: true,
+
   inputs: {
     dir: {
       example: '/Users/mikermcneil/.tmp/foo',
@@ -21,6 +16,10 @@ module.exports = {
       defaultsTo: 1000
     }
   },
+
+  defaultExit: 'success',
+  catchallExit: 'error',
+
   exits: {
     error: {},
     success: {
@@ -34,16 +33,20 @@ module.exports = {
       ]
     }
   },
-  fn: function ($i,$x) {
+
+  fn: function (inputs, exits) {
+
+    var ls = require('list-directory-contents');
+
     try {
-      if (typeof $i.depth !== 'undefined') {
-        return $x.error('`depth` input is not supported yet!  Please consider contributing :)');
+      if (typeof inputs.depth !== 'undefined') {
+        return exits.error('`depth` input is not supported yet!  Please consider contributing :)');
       }
 
-      return ls($i.dir, $x);
+      return ls(inputs.dir, exits);
     }
     catch(e){
-      return $x(e);
+      return exits(e);
     }
   }
 };

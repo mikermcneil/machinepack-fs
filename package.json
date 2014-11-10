@@ -25,11 +25,10 @@
     "async": "^0.9.0"
   },
   "machinepack": {
-    "focus": "fs",
-    "machine-api": "~0.0.0",
+    "machineDir": "machines",
     "machines": [
-      "ls",
       "cp",
+      "ls",
       "rmrf",
       "template",
       "write"

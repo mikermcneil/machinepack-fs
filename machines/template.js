@@ -1,20 +1,18 @@
-/**
- * Module dependencies
- */
-
-var util = require('util');
-var fsx = require('fs-extra');
-var _ = require('lodash');
-var writeFileFromStr = require('node-machine').build(require('./write'));
-
-
 module.exports = {
-  id: 'template',
-  machinepack: 'fs',
+
+  identity: 'template',
+  friendlyName: 'template',
   description: 'Read file at source path, replace relevant lodash template substrings using provided data, then write to destination path.',
+  cacheable: false,
+
   inputs: {
     source: {
-      example: '/Users/mikermcneil/.tmp/foo'
+      example: '/Users/mikermcneil/.tmp/foo',
+      required: true
+    },
+    destination: {
+      example: '/Users/mikermcneil/.tmp/bar',
+      required: true
     },
     data: {
       example: {
@@ -25,13 +23,9 @@ module.exports = {
         projectName: 'Bikrosoft (Confidential)'
       }
     },
-    destination: {
-      example: '/Users/mikermcneil/.tmp/bar'
-    },
     force: {
       description: 'overwrite existing file(s)?',
-      type: 'boolean',
-      defaultsTo: false
+      example: false
     },
     options: {
       description: 'template options (see http://lodash.com/docs#template)',
@@ -40,6 +34,10 @@ module.exports = {
       }
     }
   },
+
+  defaultExit: 'success',
+  catchallExit: 'error',
+
   exits: {
     error: {},
     success: {},
@@ -57,25 +55,31 @@ module.exports = {
       }
     }
   },
-  fn: function ($i,$x) {
 
-    fsx.readFile($i.source, 'utf8', function(err, contents) {
+  fn: function (inputs, exits) {
+
+    var util = require('util');
+    var fsx = require('fs-extra');
+    var _ = require('lodash');
+    var writeFileFromStr = require('node-machine').build(require('./write'));
+
+    fsx.readFile(inputs.source, 'utf8', function(err, contents) {
       if (err) {
         err = (typeof err === 'object' && err instanceof Error) ? err : new Error(err);
         err.message = 'Template error: ' + err.message;
-        err.path = $i.source;
+        err.path = inputs.source;
         if (err.code === 'ENOENT') {
-          return ($x.noTemplate||$x.error)(err);
+          return (exits.noTemplate||exits.error)(err);
         }
-        return $x.error(err);
+        return exits.error(err);
       }
       try {
-        var options = $i.options || {};
-        contents = _.template(contents, $i.data, options);
+        var options = inputs.options || {};
+        contents = _.template(contents, inputs.data, options);
 
         // With lodash teplates, HTML entities are escaped by default.
         // Default assumption is we DON'T want that, so we'll reverse it.
-        if (!$i.escapeHTMLEntities) {
+        if (!inputs.escapeHTMLEntities) {
           contents = _.unescape(contents);
         }
       } catch (e) {
@@ -91,23 +95,21 @@ module.exports = {
             status: 500,
             exit: 'missingData',
             name: 'ReferenceError',
-            message: util.format('`%s` is used in template "%s", but no value for `%s` was provided as template data.', undefinedScopeVar, $i.source, undefinedScopeVar)
+            message: util.format('`%s` is used in template "%s", but no value for `%s` was provided as template data.', undefinedScopeVar, inputs.source, undefinedScopeVar)
           };
-          return ($x.missingData||$x.error)(err);
+          return (exits.missingData||exits.error)(err);
         }
 
-        return $x.error(e);
+        return exits.error(e);
       }
 
       // Finally, write templated string to disk
       writeFileFromStr({
-        force: $i.force,
+        force: inputs.force,
         string: contents,
-        destination: $i.destination
+        destination: inputs.destination
       })
-      .exec($x);
-
+      .exec(exits);
     });
   }
 };
-

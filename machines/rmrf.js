@@ -1,30 +1,32 @@
-/**
- * Module dependencies
- */
-
-var fsx = require('fs-extra');
-
-
-
-
 module.exports = {
-  id: 'rmrf',
-  moduleName: 'machinepack-fs',
+
+  identity: 'rmrf',
+  friendlyName: 'rmrf',
   description: 'Remove a directory and all contents',
-  transparent: true,
+  cacheable: false,
+
   inputs: {
     dir: {
-      example: '/Users/mikermcneil/.tmp/foo'
+      example: '/Users/mikermcneil/.tmp/foo',
+      required: true
     },
     sync: {
       example: true
     }
   },
+
+  defaultExit: 'success',
+  catchallExit: 'error',
+
   exits: {
     error: {},
     success: {}
   },
-  fn: function (inputs,exits) {
+
+  fn: function (inputs, exits) {
+
+    var fsx = require('fs-extra');
+
     if (inputs.sync === true) {
       try {
         fsx.removeSync(inputs.dir);
