@@ -1,8 +1,8 @@
 module.exports = {
 
   identity: 'write',
-  friendlyName: 'write',
-  description: 'Generate a file on disk using the specified string.',
+  friendlyName: 'Write a file to disk',
+  description: 'Generate a file on the local filesystem using the specified utf8 string.',
   cacheable: false,
 
   inputs: {
