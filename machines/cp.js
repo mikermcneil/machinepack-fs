@@ -9,10 +9,12 @@ module.exports = {
   inputs: {
     source: {
       example: '/Users/mikermcneil/.tmp/foo',
+      description: 'The path (relative or absolute) to the file or directory to copy.',
       required: true
     },
     destination: {
       example: '/Users/mikermcneil/.tmp/bar',
+      description: 'The path (relative or absolute) to the directory in which to place the copied file(s).  When copying a single file, a target filename may be specified.',
       required: true
     }
   },

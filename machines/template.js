@@ -8,13 +8,16 @@ module.exports = {
   inputs: {
     source: {
       example: '/Users/mikermcneil/.tmp/foo',
+      description: 'Path (relative or absolute) to the file to be read.',
       required: true
     },
     destination: {
+      description: 'Path (relative or absolute) to the file to be written.',
       example: '/Users/mikermcneil/.tmp/bar',
       required: true
     },
     data: {
+      description: 'Data to be used as template token replacements.',
       example: {
         email: {
           from: 'mikermcneil@sailsjs.org',
@@ -24,11 +27,11 @@ module.exports = {
       }
     },
     force: {
-      description: 'overwrite existing file(s)?',
+      description: 'Overwrite existing file(s)?',
       example: false
     },
     options: {
-      description: 'template options (see http://lodash.com/docs#template)',
+      description: 'Template options (see http://lodash.com/docs#template)',
       example: {
         interpolate: /{{([\s\S]+?)}}/g
       }

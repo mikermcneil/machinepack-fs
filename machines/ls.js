@@ -8,6 +8,7 @@ module.exports = {
   inputs: {
     dir: {
       example: '/Users/mikermcneil/.tmp/foo',
+      description: 'Path (relative or absolute) to the directory whose contents should be listed.',
       required: true
     },
     depth: {

@@ -2,15 +2,17 @@ module.exports = {
 
   identity: 'rmrf',
   friendlyName: 'rmrf',
-  description: 'Remove a directory and all contents',
+  description: 'Remove a directory and all contents (including subdirectories)',
   cacheable: false,
 
   inputs: {
     dir: {
       example: '/Users/mikermcneil/.tmp/foo',
+      description: 'Path (relative or absolute) to the directory to be removed.',
       required: true
     },
     sync: {
+      description: 'Whether to process the removal synchronously (defaults to false).',
       example: true
     }
   },
