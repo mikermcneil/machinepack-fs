@@ -8,6 +8,7 @@
   "keywords": [
     "machine",
     "machines",
+    "machinepack",
     "github",
     "github-api",
     "email"
@@ -25,6 +26,7 @@
     "async": "^0.9.0"
   },
   "machinepack": {
+    "friendlyName": "Filesystem",
     "machineDir": "machines",
     "machines": [
       "cp",
