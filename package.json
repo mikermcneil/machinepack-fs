@@ -31,7 +31,8 @@
       "ls",
       "rmrf",
       "template",
-      "write"
+      "write",
+      "read"
     ]
   }
 }
