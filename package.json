@@ -1,7 +1,7 @@
 {
   "name": "machinepack-fs",
   "version": "1.1.1",
-  "description": "Machines for working with the local filesystem.",
+  "description": "Work with the local filesystem, i.e. `ls`, `rm -rf`, `cp -r`, and more",
   "scripts": {
     "test": "mocha -b"
   },
