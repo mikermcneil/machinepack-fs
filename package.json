@@ -9,9 +9,7 @@
     "machine",
     "machines",
     "machinepack",
-    "github",
-    "github-api",
-    "email"
+    "filesystem"
   ],
   "author": "Mike McNeil",
   "license": "MIT",
