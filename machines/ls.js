@@ -23,12 +23,7 @@ module.exports = {
     },
     success: {
       example: [
-        '/Users/mikermcneil/.tmp/foo/.gitignore',
-        '/Users/mikermcneil/.tmp/foo/README.md',
-        '/Users/mikermcneil/.tmp/foo/bar/',
-        '/Users/mikermcneil/.tmp/foo/bar/index.html',
-        '/Users/mikermcneil/.tmp/foo/bar/favicon.ico',
-        '/Users/mikermcneil/.tmp/foo/bar/images/logo.png'
+        '/Users/mikermcneil/.tmp/foo/.gitignore'
       ]
     }
   },
