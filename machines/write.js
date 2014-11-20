@@ -1,9 +1,7 @@
 module.exports = {
 
-  identity: 'write',
-  friendlyName: 'Write a file to disk',
-  description: 'Generate a file on the local filesystem using the specified utf8 string.',
-  cacheable: false,
+  friendlyName: 'Write file from string',
+  description: 'Generate a file on the local filesystem using the specified utf8 string as its contents.',
 
   inputs: {
     string: {
@@ -26,9 +24,7 @@ module.exports = {
     error: {},
     success: {},
     alreadyExists: {
-      example: {
-        code: 'ENOENT'
-      }
+      description: 'Something already exists at the specified path (overwrite by enabling the `force` input)'
     }
   },
 

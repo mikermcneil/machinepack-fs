@@ -1,9 +1,7 @@
 module.exports = {
 
-  identity: 'template',
-  friendlyName: 'template',
+  friendlyName: 'Template file',
   description: 'Read file at source path, replace relevant lodash template substrings using provided data, then write to destination path.',
-  cacheable: false,
 
   inputs: {
     source: {

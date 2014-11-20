@@ -1,10 +1,7 @@
 module.exports = {
-
-  identity: 'cp',
-  friendlyName: 'cp',
+  friendlyName: 'Copy file or directory',
   description: 'Copy file or directory located at source path to the destination path.',
   extendedDescription: 'Includes all of its descendant files and directories (i.e. `cp -r`)',
-  cacheable: false,
 
   inputs: {
     source: {
