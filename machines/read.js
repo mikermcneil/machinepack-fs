@@ -20,7 +20,8 @@ module.exports = {
       description: 'No file exists at the provided `source` path'
     },
     success: {
-      example: 'stuff in a file!'
+      example: 'stuff in a file!',
+      description: 'Returns the contents of the file at `source` path'
     }
   },
 
