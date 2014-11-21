@@ -27,9 +27,9 @@ module.exports = {
 
   fn: function (inputs, exits) {
 
-    var fsx = require('fs-extra');
+    var fs = require('fs');
 
-    fsx.readFile(inputs.source, function (err, contents) {
+    fs.readFile(inputs.source, 'utf8', function (err, contents) {
       if (err) {
         if (typeof err === 'object' && err.code === 'ENOENT') {
           return exits.doesNotExist();
