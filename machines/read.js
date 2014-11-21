@@ -16,6 +16,9 @@ module.exports = {
 
   exits: {
     error: {},
+    doesNotExist: {
+      description: 'No file exists at the provided `source` path'
+    },
     success: {
       example: 'stuff in a file!'
     }
@@ -26,7 +29,13 @@ module.exports = {
     var fsx = require('fs-extra');
 
     fsx.readFile(inputs.source, function (err, contents) {
-      if (err) return exits.error(err);
+      if (err) {
+        if (typeof err === 'object' && err.code === 'ENOENT') {
+          return exits.doesNotExist();
+        }
+        // Some unrecognized error
+        return exits.error(err);
+      }
       return exits.success(contents);
     });
   }
