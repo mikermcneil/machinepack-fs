@@ -59,7 +59,7 @@ module.exports = {
     var util = require('util');
     var fsx = require('fs-extra');
     var _ = require('lodash');
-    var writeFileFromStr = require('node-machine').build(require('./write'));
+    var writeFileFromStr = require('machine').build(require('./write'));
 
     fsx.readFile(inputs.source, 'utf8', function(err, contents) {
       if (err) {
