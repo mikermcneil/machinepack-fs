@@ -35,7 +35,8 @@
       "read",
       "read-json",
       "exists",
-      "mv"
+      "mv",
+      "mkdir"
     ]
   }
 }
