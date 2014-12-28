@@ -33,7 +33,8 @@
       "write",
       "write-json",
       "read",
-      "read-json"
+      "read-json",
+      "exists"
     ]
   }
 }
