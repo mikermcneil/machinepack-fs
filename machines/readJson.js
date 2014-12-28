@@ -42,7 +42,7 @@ module.exports = {
         return exits.error(err);
       }
 
-      return exits.success(contents);
+      return exits.success(json);
     });
   }
 };
