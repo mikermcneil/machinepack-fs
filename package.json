@@ -6,7 +6,6 @@
     "test": "mocha -b"
   },
   "keywords": [
-    "machine",
     "machines",
     "machinepack",
     "filesystem"
@@ -32,8 +31,9 @@
       "rmrf",
       "template",
       "write",
+      "write-json",
       "read",
-      "readJson"
+      "read-json"
     ]
   }
 }
