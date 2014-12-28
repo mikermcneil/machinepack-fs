@@ -35,7 +35,7 @@
       "read",
       "read-json",
       "exists",
-      "move"
+      "mv"
     ]
   }
 }
