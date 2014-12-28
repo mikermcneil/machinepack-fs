@@ -32,7 +32,8 @@
       "rmrf",
       "template",
       "write",
-      "read"
+      "read",
+      "readJson"
     ]
   }
 }
