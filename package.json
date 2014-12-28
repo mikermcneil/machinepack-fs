@@ -34,7 +34,8 @@
       "write-json",
       "read",
       "read-json",
-      "exists"
+      "exists",
+      "move"
     ]
   }
 }
