@@ -1,7 +1,8 @@
 module.exports = {
 
   friendlyName: 'Template file',
-  description: 'Read file at source path, replace relevant lodash template substrings using provided data, then write to destination path.',
+  description: 'Read file at source path, replace substrings with provided data, then write to destination path.',
+  extendedDescription: 'Uses lodash template syntax (e.g. `"Hi there, <%=firstName%>!"`)',
 
   inputs: {
     source: {
@@ -13,13 +14,14 @@ module.exports = {
       required: true
     },
     data: {
-      example: {
-        email: {
-          from: 'mikermcneil@sailsjs.org',
-          subject: 'hello world!'
-        },
-        projectName: 'Bikrosoft (Confidential)'
-      }
+      typeclass: 'dictionary'
+      // e.g. {
+      //   email: {
+      //     from: 'mikermcneil@sailsjs.org',
+      //     subject: 'hello world!'
+      //   },
+      //   projectName: 'Bikrosoft (Confidential)'
+      // }
     },
     force: {
       description: 'overwrite existing file(s)?',
@@ -27,22 +29,24 @@ module.exports = {
     },
     options: {
       description: 'template options (see http://lodash.com/docs#template)',
-      example: {
-        interpolate: /{{([\s\S]+?)}}/g
-      }
+      typeclass: 'dictionary'
+      // example: {
+      //   interpolate: /{{([\s\S]+?)}}/g
+      // }
     }
   },
 
   defaultExit: 'success',
-  catchallExit: 'error',
 
   exits: {
-    error: {},
-    success: {},
+    error: {
+      description: 'Unexpected error occurred.'
+    },
+    success: {
+      description: 'File written successfully.'
+    },
     noTemplate: {
-      example: {
-        code: 'ENOENT'
-      }
+      description: 'Source template file not found'
     },
     missingData: {
       example: {
