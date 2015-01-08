@@ -77,7 +77,7 @@ module.exports = {
       }
       try {
         var options = inputs.options || {};
-        contents = _.template(contents, inputs.data, options);
+        contents = _.template(contents, inputs.data||{}, options);
 
         // With lodash teplates, HTML entities are escaped by default.
         // Default assumption is we DON'T want that, so we'll reverse it.
