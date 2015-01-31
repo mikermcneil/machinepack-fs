@@ -1,19 +1,14 @@
 module.exports = {
 
-  identity: 'rmrf',
-  friendlyName: 'rmrf',
-  description: 'Remove a directory and all contents (including subdirectories)',
-  cacheable: false,
+  friendlyName: 'Delete file or directory',
+  description: 'Completely remove a file or directory (like rm -rf).',
+  extendedDescription: 'If the provided path is a directory, all contents will be removed recursively.',
 
   inputs: {
     dir: {
       example: '/Users/mikermcneil/.tmp/foo',
-      description: 'Path (relative or absolute) to the directory to be removed.',
+      description: 'The absolute path to the file or directory to remove',
       required: true
-    },
-    sync: {
-      description: 'Whether to process the removal synchronously (defaults to false).',
-      example: true
     }
   },
 
@@ -28,15 +23,6 @@ module.exports = {
   fn: function (inputs, exits) {
 
     var fsx = require('fs-extra');
-
-    if (inputs.sync === true) {
-      try {
-        fsx.removeSync(inputs.dir);
-        return exits.success();
-      } catch(e) {
-        return exits.error(e);
-      }
-    }
 
     fsx.remove(inputs.dir, function(err) {
       if (err) {return exits.error(err);}

@@ -5,7 +5,6 @@ Machines for working with the local filesystem.
 ## Installation
 
 ```sh
-$ npm install node-machine
 $ npm install machinepack-fs
 ```
 
@@ -22,7 +21,7 @@ Filesystem.ls({
 });
 ```
 
-For more info about working with machines, see the [node-machine repo](http://github.com/mikermcneil/node-machine).
+For more info about working with machines, see the [node-machine.org](http://node-machine.org).
 
 
 ## License

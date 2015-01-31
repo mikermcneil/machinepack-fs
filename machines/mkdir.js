@@ -1,26 +1,16 @@
 module.exports = {
 
-  friendlyName: 'Write file from string',
-  description: 'Generate a file on the local filesystem using the specified utf8 string as its contents.',
+  friendlyName: 'Create directory',
+  description: 'Create a new directory.',
 
   inputs: {
-    string: {
-      description: 'Text to write to the file',
-      example: 'lots of words, utf8 things you know',
-    },
     destination: {
-      description: 'Path (relative or absolute) to the file to write.',
       example: '/Users/mikermcneil/.tmp/bar',
       required: true
-    },
-    force: {
-      description: 'overwrite existing file(s)?',
-      example: false
     }
   },
 
   defaultExit: 'success',
-  catchallExit: 'error',
 
   exits: {
     error: {},
@@ -37,14 +27,6 @@ module.exports = {
     var _ = require('lodash');
     var async = require('async');
 
-    inputs = _.defaults(inputs, {
-      force: false,
-      dry: false
-    });
-
-    // Coerce `string` input into an actual string
-    inputs.string = inputs.string || '';
-
     // In case we ended up here w/ a relative path,
     // resolve it using the process's CWD
     inputs.destination = path.resolve(process.cwd(), inputs.destination);
@@ -59,16 +41,16 @@ module.exports = {
       if (inputs.dry) return exits.success();
 
       async.series([
-        function deleteExistingFileIfNecessary(exits) {
-          if (!exists) return exits();
-          return fsx.remove(inputs.destination, exits);
+        function deleteExistingFileIfNecessary(next) {
+          if (!exists) return next();
+          return fsx.remove(inputs.destination, next);
         },
-        function writeToDisk(exits) {
-          fsx.outputFile(inputs.destination, inputs.string, exits);
+        function writeToDisk(next) {
+          fsx.mkdirs(inputs.destination, next);
         }
       ], function (err){
-        if (err) return exits(err);
-        return exits();
+        if (err) return exits.error(err);
+        return exits.success();
       });
 
     });

@@ -1,8 +1,6 @@
 module.exports = {
-
-  identity: 'ls',
-  friendlyName: 'ls',
-  description: 'List directory contents',
+  friendlyName: 'List directory contents',
+  description: 'List contents of a directory on the local filesystem.',
   cacheable: true,
 
   inputs: {
@@ -13,8 +11,7 @@ module.exports = {
     },
     depth: {
       description: 'The maximum number of "hops" (i.e. directories deep) to include directory contents from.  For instance, if you are running `ls` on "foo/" which has a subdirectory "foo/bar/baz/", if `depth` is set to 2, the results will include "foo/bar/baz/", but none of the files/folders contained within.',
-      example: 2,
-      defaultsTo: 1000
+      example: 2
     }
   },
 
@@ -22,15 +19,12 @@ module.exports = {
   catchallExit: 'error',
 
   exits: {
-    error: {},
+    error: {
+      description: 'Triggered when a filesystem error occurs'
+    },
     success: {
       example: [
-        '/Users/mikermcneil/.tmp/foo/.gitignore',
-        '/Users/mikermcneil/.tmp/foo/README.md',
-        '/Users/mikermcneil/.tmp/foo/bar/',
-        '/Users/mikermcneil/.tmp/foo/bar/index.html',
-        '/Users/mikermcneil/.tmp/foo/bar/favicon.ico',
-        '/Users/mikermcneil/.tmp/foo/bar/images/logo.png'
+        '/Users/mikermcneil/.tmp/foo/.gitignore'
       ]
     }
   },
@@ -47,7 +41,7 @@ module.exports = {
       return ls(inputs.dir, exits);
     }
     catch(e){
-      return exits(e);
+      return exits.error(e);
     }
   }
 };
