@@ -1,12 +1,17 @@
 module.exports = {
-  friendlyName: 'Read file as JSON',
-  description: 'Read JSON file located at source path on disk into a JavaScript object or array.',
+  friendlyName: 'Read JSON file',
+  description: 'Read and parse JSON file located at source path on disk into usable data.',
   extendedDescription: 'Assumes file is encoded using utf8.',
 
   inputs: {
     source: {
       description: 'Absolute path to the source file (if relative path is provided, will resolve path from current working directory)',
       example: '/Users/mikermcneil/.tmp/foo',
+      required: true
+    },
+    schema: {
+      description: 'An example of what the parsed data should look like (used for type-coercion)',
+      typeclass: '*',
       required: true
     }
   },
@@ -22,27 +27,36 @@ module.exports = {
       description: 'Could not parse file as JSON.'
     },
     success: {
-      description: 'Returns the data stored in file at `source` path'
+      description: 'Returns the data stored in file at `source` path',
+      getExample: function (inputs){
+        return inputs.schema;
+      }
     }
   },
 
   fn: function (inputs, exits) {
 
-    var fsx = require('fs-extra');
+    var Util = require('machinepack-util');
 
-    fsx.readJson(inputs.source, function (err, json) {
-      if (err) {
-        if (typeof err === 'object' && err.code === 'ENOENT') {
-          return exits.doesNotExist(err);
-        }
-        if (typeof err === 'object' && err.type === 'unexpected_token') {
-          return exits.couldNotParse(err);
-        }
-        // Some unrecognized error
-        return exits.error(err);
+    var readFile = require('machine').build(require('./read'));
+
+    readFile({
+      source: inputs.source
+    }).exec({
+      error: exits.error,
+      doesNotExist: exits.doesNotExist,
+      success: function (contents){
+        Util.parseJson({
+          json: contents,
+          schema: inputs.schema
+        }).exec({
+          error: exits.error,
+          couldNotParse: exits.couldNotParse,
+          success: function (parsedData){
+            return exits.success(parsedData);
+          }
+        });
       }
-
-      return exits.success(json);
     });
   }
 };
