@@ -2,7 +2,7 @@ module.exports = {
 
   friendlyName: 'Delete file or directory',
   description: 'Completely remove a file or directory (like rm -rf).',
-  extendedDescription: 'If the provided path is a directory, all contents will be removed recursively.',
+  extendedDescription: 'If the provided path is a directory, all contents will be removed recursively. If nothing exists at the provided path, the success exit will be triggered, but nothing will be deleted.',
 
   inputs: {
     dir: {
@@ -13,7 +13,6 @@ module.exports = {
   },
 
   defaultExit: 'success',
-  catchallExit: 'error',
 
   exits: {
     error: {},
