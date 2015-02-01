@@ -24,6 +24,10 @@
     "machine": "^1.1.0",
     "async": "^0.9.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mikermcneil/machinepack-fs.git"
+  },
   "machinepack": {
     "friendlyName": "Filesystem",
     "machineDir": "machines",
@@ -40,11 +44,5 @@
       "mv",
       "mkdir"
     ]
-  },
-  "readme": "# machinepack-fs\n\nMachines for working with the local filesystem.\n\n## Installation\n\n```sh\n$ npm install machinepack-fs\n```\n\n## Basic Usage\n\n```javascript\nvar Filesystem = require('machinepack-fs');\n\nFilesystem.ls({\n  dir: '/blah/foo/bar'\n})\n.exec(function (err, result) {\n  // ...\n});\n```\n\nFor more info about working with machines, see the [node-machine.org](http://node-machine.org).\n\n\n## License\n\nMIT &copy; Mike McNeil 2014\n",
-  "readmeFilename": "README.md",
-  "_id": "machinepack-fs@1.6.3",
-  "_shasum": "732bfd3733fdeb8fb523b5480bf25c701b674a1a",
-  "_from": "machinepack-fs@^1.3.4",
-  "_resolved": "https://registry.npmjs.org/machinepack-fs/-/machinepack-fs-1.6.3.tgz"
+  }
 }
