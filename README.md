@@ -1,29 +1,24 @@
+![](http://node-machine.org/images/machine-anthropomorph-for-white-bg.png)
+
 # machinepack-fs
 
-Machines for working with the local filesystem.
+Work with the local filesystem; list files, write files, etc.
 
-## Installation
+### Installation
 
 ```sh
 $ npm install machinepack-fs
 ```
 
-## Basic Usage
+### Usage
 
-```javascript
-var Filesystem = require('machinepack-fs');
+For the latest usage documentation and status of this module, see [http://node-machine.org/machinepack-fs](http://node-machine.org/machinepack-fs).
 
-Filesystem.ls({
-  dir: '/blah/foo/bar'
-})
-.exec(function (err, result) {
-  // ...
-});
-```
+### About
 
-For more info about working with machines, see the [node-machine.org](http://node-machine.org).
+This is a [machinepack](http://node-machine.org/), a module which exposes a set of related machines according to the [machinepack specification](http://node-machine.org/spec/machinepack).
+Documentation pages for the machines contained in this module are automatically generated and kept up-to-date on http://node-machine.org.
 
+### License
 
-## License
-
-MIT &copy; Mike McNeil 2014
+MIT &copy; 2015 contributors
