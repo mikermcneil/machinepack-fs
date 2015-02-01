@@ -2,6 +2,7 @@ module.exports = {
   friendlyName: 'Read file',
   description: 'Read file located at source path on disk into a string.',
   extendedDescription: 'Assumes file is encoded using utf8.',
+  cacheable: true,
 
   inputs: {
     source: {
