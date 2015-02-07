@@ -7,7 +7,7 @@ module.exports = {
   inputs: {
     source: {
       description: 'Absolute path to the source file (if relative path is provided, will resolve path from current working directory)',
-      example: '/Users/mikermcneil/.tmp/foo',
+      example: '/Users/mikermcneil/.tmp/foo.json',
       required: true
     },
     schema: {

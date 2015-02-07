@@ -1,15 +1,16 @@
 module.exports = {
-  friendlyName: 'Read file as JSON',
-  description: 'Read JSON file located at source path on disk into a JavaScript object or array.',
+  friendlyName: 'Write JSON file',
+  description: 'Write some data to the specified destination path on disk.',
   extendedDescription: 'Assumes file is encoded using utf8.',
 
   inputs: {
     json: {
-      typeclass: 'dictionary',
+      typeclass: '*',
+      description: 'The data to write to disk as JSON',
       required: true
     },
     destination: {
-      example: '/Users/mikermcneil/.tmp/bar',
+      example: '/Users/mikermcneil/.tmp/bar.json',
       description: 'Absolute path to the destination file (if relative path is provided, will resolve path from current working directory)',
       required: true
     },
