@@ -10,9 +10,7 @@
     "machinepack",
     "filesystem"
   ],
-  "author": {
-    "name": "Mike McNeil"
-  },
+  "author": "Mike McNeil",
   "license": "MIT",
   "devDependencies": {
     "mocha": "~1.19.0",
