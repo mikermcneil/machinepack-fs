@@ -6,7 +6,7 @@ module.exports = {
   inputs: {
     dir: {
       example: '/Users/mikermcneil/.tmp/foo',
-      description: 'Path (relative or absolute) to the directory whose contents should be listed.',
+      description: 'Absolute path to the directory whose contents should be listed (if relative path provided, will be resolved from cwd).',
       required: true
     },
     depth: {
@@ -38,6 +38,9 @@ module.exports = {
     var path = require('path');
 
     try {
+
+      // Ensure we've got an absolute path
+      inputs.dir = path.resolve(inputs.dir);
 
       var spinlock;
       var results = [];

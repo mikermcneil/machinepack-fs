@@ -2,8 +2,30 @@
   "machine": "ls",
   "expectations": [
     {
-      "todo": true,
-      "using": {},
+      "using": {
+        "dir": "./"
+      },
+      "outcome": "success"
+    },
+    {
+      "using": {
+        "dir": "./",
+        "depth": 2
+      },
+      "outcome": "success"
+    },
+    {
+      "using": {
+        "dir": "./",
+        "depth": 1
+      },
+      "outcome": "success"
+    },
+    {
+      "using": {
+        "dir": "./",
+        "depth": -1
+      },
       "outcome": "success"
     }
   ]
