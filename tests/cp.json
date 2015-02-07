@@ -1,0 +1,10 @@
+{
+  "machine": "cp",
+  "expectations": [
+    {
+      "todo": true,
+      "using": {},
+      "outcome": "success"
+    }
+  ]
+}

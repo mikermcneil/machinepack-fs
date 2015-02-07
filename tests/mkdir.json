@@ -1,0 +1,10 @@
+{
+  "machine": "mkdir",
+  "expectations": [
+    {
+      "todo": true,
+      "using": {},
+      "outcome": "success"
+    }
+  ]
+}
