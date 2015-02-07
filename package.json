@@ -28,7 +28,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/mikermcneil/machinepack-fs.git"
+    "url": "https://github.com/mikermcneil/machinepack-fs.git"
   },
   "machinepack": {
     "friendlyName": "Filesystem",
