@@ -5,8 +5,14 @@ module.exports = {
 
   inputs: {
     destination: {
+      description: 'The destination path where the new directory should be created.',
+      extendedDescription: 'If a relative path is provided, it will be resolved to an absolute path using the current working directory.',,
       example: '/Users/mikermcneil/.tmp/bar',
       required: true
+    },
+    force: {
+      description: 'Whether or not to overwrite a file or directory which already exists at the specified destination.',
+      example: true
     }
   },
 
