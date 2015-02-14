@@ -1,30 +1,44 @@
 module.exports = {
 
+
   friendlyName: 'Create directory',
+
+
   description: 'Create a new directory.',
 
+
   inputs: {
+
     destination: {
       description: 'The destination path where the new directory should be created.',
-      extendedDescription: 'If a relative path is provided, it will be resolved to an absolute path using the current working directory.',,
+      extendedDescription: 'If a relative path is provided, it will be resolved to an absolute path using the current working directory.',
       example: '/Users/mikermcneil/.tmp/bar',
       required: true
     },
+
     force: {
       description: 'Whether or not to overwrite a file or directory which already exists at the specified destination.',
       example: true
     }
+
   },
+
 
   defaultExit: 'success',
 
+
   exits: {
+
     error: {},
+
     success: {},
+
     alreadyExists: {
       description: 'Something already exists at the specified path (overwrite by enabling the `force` input)'
     }
+
   },
+
 
   fn: function (inputs, exits) {
 
@@ -62,4 +76,6 @@ module.exports = {
     });
 
   }
+
+
 };
