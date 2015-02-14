@@ -1,0 +1,10 @@
+{
+  "machine": "ensure-dir",
+  "expectations": [
+    {
+      "todo": true,
+      "using": {},
+      "outcome": "success"
+    }
+  ]
+}
