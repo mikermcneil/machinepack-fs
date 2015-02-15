@@ -1,14 +1,22 @@
 module.exports = {
 
   friendlyName: 'Check existence',
+
+
   description: 'Check whether a file or directory exists at the given path.',
 
+
+  cacheable: true,
+
+
   inputs: {
+
     path: {
       example: '/Users/mikermcneil/.tmp/foo',
       description: 'The absolute path to the file or directory',
       required: true
     }
+
   },
 
   defaultExit: 'exists',

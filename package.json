@@ -43,7 +43,8 @@
       "exists",
       "mv",
       "mkdir",
-      "ensure-dir"
+      "ensure-dir",
+      "get-home-dirpath"
     ],
     "testsUrl": "https://travis-ci.org/mikermcneil/machinepack-fs"
   }
