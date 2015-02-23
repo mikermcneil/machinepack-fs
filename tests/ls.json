@@ -2,31 +2,144 @@
   "machine": "ls",
   "expectations": [
     {
+      "todo": false,
       "using": {
         "dir": "./"
       },
-      "outcome": "success"
+      "outcome": "success",
+      "returns": ""
     },
     {
+      "todo": false,
       "using": {
         "dir": "./",
         "depth": 2
       },
-      "outcome": "success"
+      "outcome": "success",
+      "returns": ""
     },
     {
+      "todo": false,
       "using": {
         "dir": "./",
         "depth": 1
       },
-      "outcome": "success"
+      "outcome": "success",
+      "returns": ""
     },
     {
+      "todo": false,
       "using": {
         "dir": "./",
         "depth": -1
       },
-      "outcome": "success"
+      "outcome": "success",
+      "returns": ""
+    },
+    {
+      "todo": false,
+      "using": {
+        "dir": "/Users/mikermcneil/Desktop",
+        "depth": "1"
+      },
+      "outcome": "success",
+      "returns": ""
+    },
+    {
+      "todo": false,
+      "using": {
+        "dir": "/Users/mikermcneil/Desktop",
+        "depth": "sdagsaggsad"
+      },
+      "outcome": "error",
+      "returns": ""
+    },
+    {
+      "using": {
+        "dir": "/Users/mikermcneil/Desktop",
+        "depth": "2"
+      },
+      "outcome": "success",
+      "returns": [
+        "/Users/mikermcneil/Desktop/.DS_Store",
+        "/Users/mikermcneil/Desktop/.localized",
+        "/Users/mikermcneil/Desktop/decks",
+        "/Users/mikermcneil/Desktop/marketing_assets",
+        "/Users/mikermcneil/Desktop/decks/.DS_Store",
+        "/Users/mikermcneil/Desktop/scraps",
+        "/Users/mikermcneil/Desktop/decks/SY numbers.zip",
+        "/Users/mikermcneil/Desktop/decks/Sails-Intro_v2.pdf",
+        "/Users/mikermcneil/Desktop/decks/dotjs_final.zip",
+        "/Users/mikermcneil/Desktop/decks/sf_east_bay_js.zip",
+        "/Users/mikermcneil/Desktop/marketing_assets/.DS_Store",
+        "/Users/mikermcneil/Desktop/marketing_assets/logo_new_notext.png",
+        "/Users/mikermcneil/Desktop/marketing_assets/header.png",
+        "/Users/mikermcneil/Desktop/marketing_assets/logo_noText.png",
+        "/Users/mikermcneil/Desktop/marketing_assets/logo_round.png",
+        "/Users/mikermcneil/Desktop/scraps/.DS_Store",
+        "/Users/mikermcneil/Desktop/scraps/POSTMAN_COLLECTION.json",
+        "/Users/mikermcneil/Desktop/decks/SY numbers.key",
+        "/Users/mikermcneil/Desktop/scraps/Screen Shot 2014-11-02 at 8.51.12 PM.png",
+        "/Users/mikermcneil/Desktop/scraps/Screen Shot 2014-11-17 at 11.14.57 AM.png",
+        "/Users/mikermcneil/Desktop/scraps/Screen Shot 2014-11-17 at 11.54.37 AM.png",
+        "/Users/mikermcneil/Desktop/scraps/Screen Shot 2014-11-17 at 12.43.55 PM.png",
+        "/Users/mikermcneil/Desktop/scraps/convo_with_irl.mov",
+        "/Users/mikermcneil/Desktop/scraps/convo_with_irl_oct_27.mov",
+        "/Users/mikermcneil/Desktop/scraps/dotjs edits.txt",
+        "/Users/mikermcneil/Desktop/scraps/dotjs outline.txt",
+        "/Users/mikermcneil/Desktop/scraps/for nov.txt",
+        "/Users/mikermcneil/Desktop/scraps/localDiskDb.db",
+        "/Users/mikermcneil/Desktop/scraps/loggoat.txt",
+        "/Users/mikermcneil/Desktop/scraps/luke_use_case.md",
+        "/Users/mikermcneil/Desktop/scraps/my ip address.txt",
+        "/Users/mikermcneil/Desktop/scraps/mysql-error.log",
+        "/Users/mikermcneil/Desktop/scraps/mysql-query.log",
+        "/Users/mikermcneil/Desktop/scraps/ngrok.txt",
+        "/Users/mikermcneil/Desktop/decks/SY-core-concepts.key",
+        "/Users/mikermcneil/Desktop/decks/SY-story.key",
+        "/Users/mikermcneil/Desktop/decks/SY-thesis.key",
+        "/Users/mikermcneil/Desktop/decks/allthingsopen_raleigh__ragsToOpenSource.key",
+        "/Users/mikermcneil/Desktop/decks/austin_sails_meetup_sailslocal™.key",
+        "/Users/mikermcneil/Desktop/decks/devworkshopconf__intro-to-sails-lite.key",
+        "/Users/mikermcneil/Desktop/decks/devworkshopconf__keynote.key",
+        "/Users/mikermcneil/Desktop/decks/dotjs_final.key",
+        "/Users/mikermcneil/Desktop/decks/nodeindymeetup__sailslocal™.key",
+        "/Users/mikermcneil/Desktop/decks/meanstack_meetup.key",
+        "/Users/mikermcneil/Desktop/decks/nodevember_nashville_2014.key",
+        "/Users/mikermcneil/Desktop/decks/norfolkjsmeetup__sailslocal™.key",
+        "/Users/mikermcneil/Desktop/decks/pbjconf__intro-to-sails-final.key",
+        "/Users/mikermcneil/Desktop/decks/pulling_the_plug_abridged.key",
+        "/Users/mikermcneil/Desktop/decks/sf_east_bay_js.key",
+        "/Users/mikermcneil/Desktop/decks/swan-stack.key",
+        "/Users/mikermcneil/Desktop/decks/treeline",
+        "/Users/mikermcneil/Desktop/decks/yodlee-hrvst-oct-15.key",
+        "/Users/mikermcneil/Desktop/marketing_assets/logo_variations",
+        "/Users/mikermcneil/Desktop/marketing_assets/screenshots",
+        "/Users/mikermcneil/Desktop/scraps/Please_DocuSign_this_document_McNeil",
+        "/Users/mikermcneil/Desktop/scraps/books",
+        "/Users/mikermcneil/Desktop/scraps/design assets",
+        "/Users/mikermcneil/Desktop/scraps/desktop aug18-2014",
+        "/Users/mikermcneil/Desktop/scraps/desktop aug26-2014",
+        "/Users/mikermcneil/Desktop/scraps/desktop aug8-2014",
+        "/Users/mikermcneil/Desktop/scraps/desktop jan16,2015",
+        "/Users/mikermcneil/Desktop/scraps/desktop sep2_2014",
+        "/Users/mikermcneil/Desktop/scraps/desktop-feb19-2015",
+        "/Users/mikermcneil/Desktop/scraps/desktop-fri-july11-2014",
+        "/Users/mikermcneil/Desktop/scraps/desktop-jan29",
+        "/Users/mikermcneil/Desktop/scraps/desktop-june20-2014",
+        "/Users/mikermcneil/Desktop/scraps/desktop_sep10_2014",
+        "/Users/mikermcneil/Desktop/scraps/desktop-sep_17_2014",
+        "/Users/mikermcneil/Desktop/scraps/desktop_sep16_2014",
+        "/Users/mikermcneil/Desktop/scraps/dotjs_old.key",
+        "/Users/mikermcneil/Desktop/scraps/desktop_sun_Feb_15_2015",
+        "/Users/mikermcneil/Desktop/scraps/dotjs_second_draft.key",
+        "/Users/mikermcneil/Desktop/scraps/oct23_2014",
+        "/Users/mikermcneil/Desktop/scraps/oss",
+        "/Users/mikermcneil/Desktop/scraps/sat_nov8",
+        "/Users/mikermcneil/Desktop/scraps/sat-nov15-2014",
+        "/Users/mikermcneil/Desktop/scraps/sun-october-19-2014",
+        "/Users/mikermcneil/Desktop/scraps/desktop-sep-24_2014"
+      ]
     }
   ]
 }

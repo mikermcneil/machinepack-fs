@@ -1,0 +1,10 @@
+{
+  "machine": "get-home-dirpath",
+  "expectations": [
+    {
+      "todo": true,
+      "using": {},
+      "outcome": "success"
+    }
+  ]
+}
