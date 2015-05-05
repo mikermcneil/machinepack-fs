@@ -3,6 +3,7 @@ module.exports = {
   description: 'Read and parse JSON file located at source path on disk into usable data.',
   extendedDescription: 'Assumes file is encoded using utf8.',
   cacheable: true,
+  idempotent: true,
 
   inputs: {
     source: {

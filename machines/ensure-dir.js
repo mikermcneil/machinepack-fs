@@ -4,7 +4,7 @@ module.exports = {
   friendlyName: 'Ensure directory exists',
 
 
-  description: 'Ensures that the directory exists. If the directory structure does not exist, it is created.',
+  description: 'Ensure that the directory exists. If the directory structure does not exist, it is created.',
 
 
   extendedDescription: '',
