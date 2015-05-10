@@ -21,7 +21,7 @@ module.exports = {
     },
 
     depth: {
-      friendlyName: 'Max depth',
+      friendlyName: 'Depth',
       description: 'The maximum number of "hops" (i.e. directories deep) to include directory contents from.',
       extendedDescription: 'For instance, if you are running `ls` on "foo/" which has a subdirectory "foo/bar/baz/", if `depth` is set to 2, the results will include "foo/bar/baz/", but none of the files/folders contained within.',
       example: 1,
