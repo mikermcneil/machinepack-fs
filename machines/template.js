@@ -1,7 +1,7 @@
 module.exports = {
 
 
-  friendlyName: 'Render template',
+  friendlyName: 'Template',
 
 
   description: 'Read file at source path as a template, render with provided data, then write to destination path.',
@@ -91,8 +91,8 @@ module.exports = {
       doesNotExist: exits.noTemplate,
       success: function (contents) {
         MPStrings.template({
-          templateStr: inputs.contents,
-          data: inputs.data
+          templateStr: contents,
+          data: inputs.data || {}
         }).exec({
           error: exits.error,
           missingData: exits.missingData,
