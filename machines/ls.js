@@ -1,7 +1,7 @@
 module.exports = {
 
 
-  friendlyName: 'List directory contents',
+  friendlyName: 'List contents (ls)',
 
 
   description: 'List contents of a directory on the local filesystem.',

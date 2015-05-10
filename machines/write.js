@@ -7,6 +7,9 @@ module.exports = {
   description: 'Generate a file on the local filesystem using the specified utf8 string as its contents.',
 
 
+  idempotent: true,
+
+
   inputs: {
 
     string: {

@@ -9,9 +9,6 @@ module.exports = {
   cacheable: true,
 
 
-  idempotent: true,
-
-
   inputs: {
 
     path: {

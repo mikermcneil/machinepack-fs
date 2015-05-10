@@ -1,54 +1,69 @@
 module.exports = {
+
+
   friendlyName: 'Read JSON file',
+
+
   description: 'Read and parse JSON file located at source path on disk into usable data.',
+
+
   extendedDescription: 'Assumes file is encoded using utf8.',
+
+
   cacheable: true,
-  idempotent: true,
+
 
   inputs: {
+
     source: {
       description: 'Absolute path to the source file (if relative path is provided, will resolve path from current working directory)',
       example: '/Users/mikermcneil/.tmp/foo.json',
       required: true
     },
+
     schema: {
       description: 'An example of what the parsed data should look like (used for type-coercion)',
       typeclass: '*',
       required: true
     }
+
   },
 
-  defaultExit: 'success',
 
   exits: {
-    error: {},
+
     doesNotExist: {
       description: 'No file exists at the provided `source` path'
     },
+
     couldNotParse: {
       description: 'Could not parse file as JSON.'
     },
+
+    // TODO: not a file (and return what it ACTUALLY is, e.g. dir or symlink)
+
     success: {
-      description: 'Returns the data stored in file at `source` path',
+      description: 'Returns parsed JSON data from the source file.',
       getExample: function (inputs){
         return inputs.schema;
       }
     }
+
   },
+
 
   fn: function (inputs, exits) {
 
-    var Util = require('machinepack-util');
+    var MPJSON = require('machinepack-json');
+    var thisPack = require('../');
 
-    var readFile = require('machine').build(require('./read'));
-
-    readFile({
+    thisPack.readFile({
       source: inputs.source
     }).exec({
       error: exits.error,
       doesNotExist: exits.doesNotExist,
       success: function (contents){
-        Util.parseJson({
+        MPJSON.parseJson({
           json: contents,
           schema: inputs.schema
         }).exec({
@@ -61,4 +76,6 @@ module.exports = {
       }
     });
   }
+
+
 };

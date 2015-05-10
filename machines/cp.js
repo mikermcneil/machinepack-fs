@@ -1,7 +1,7 @@
 module.exports = {
 
 
-  friendlyName: 'Copy',
+  friendlyName: 'Copy (cp)',
 
 
   description: 'Copy file or directory located at source path to the destination path.',

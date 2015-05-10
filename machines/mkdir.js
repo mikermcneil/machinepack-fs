@@ -1,10 +1,10 @@
 module.exports = {
 
 
-  friendlyName: 'Create directory',
+  friendlyName: 'Make directory (mkdir)',
 
 
-  description: 'Create a new directory.',
+  description: 'Make a new directory.',
 
 
   inputs: {

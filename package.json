@@ -21,6 +21,7 @@
     "fs-extra": "~0.10.0",
     "lodash": "^2.4.1",
     "machine": "^4.1.1",
+    "machinepack-json": "^1.0.0",
     "machinepack-strings": "^3.1.0",
     "machinepack-util": "^0.7.0",
     "walker": "~1.0.6"
