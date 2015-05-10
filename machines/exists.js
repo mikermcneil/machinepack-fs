@@ -1,12 +1,15 @@
 module.exports = {
 
-  friendlyName: 'Check existence',
+  friendlyName: 'Exists?',
 
 
   description: 'Check whether a file or directory exists at the given path.',
 
 
   cacheable: true,
+
+
+  idempotent: true,
 
 
   inputs: {

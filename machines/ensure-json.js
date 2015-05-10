@@ -10,7 +10,7 @@ module.exports = {
   extendedDescription: 'Assumes file is encoded using utf8.',
 
 
-  cacheable: true,
+  idempotent: true,
 
 
   inputs: {

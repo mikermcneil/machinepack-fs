@@ -1,13 +1,13 @@
 module.exports = {
 
 
-  friendlyName: 'Ensure directory exists',
+  friendlyName: 'Ensure directory',
 
 
   description: 'Ensure that the directory exists. If the directory structure does not exist, it is created.',
 
 
-  extendedDescription: '',
+  idempotent: true,
 
 
   inputs: {
@@ -20,9 +20,6 @@ module.exports = {
     }
 
   },
-
-
-  defaultExit: 'success',
 
 
   exits: {
