@@ -63,7 +63,7 @@ module.exports = {
       error: exits.error,
       doesNotExist: exits.doesNotExist,
       success: function (contents){
-        MPJSON.parseJson({
+        MPJSON.parse({
           json: contents,
           schema: inputs.schema
         }).exec({
