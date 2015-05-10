@@ -57,7 +57,7 @@ module.exports = {
     var MPJSON = require('machinepack-json');
     var thisPack = require('../');
 
-    thisPack.readFile({
+    thisPack.read({
       source: inputs.source
     }).exec({
       error: exits.error,
