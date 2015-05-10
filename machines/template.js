@@ -92,7 +92,7 @@ module.exports = {
       success: function (contents) {
         MPStrings.template({
           templateStr: contents,
-          data: inputs.data || {}
+          data: inputs.data
         }).exec({
           error: exits.error,
           missingData: exits.missingData,
