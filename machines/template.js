@@ -163,9 +163,9 @@ module.exports = {
         return exits.couldNotRender(mostRecentTemplateErr);
       }
 
+      // With lodash teplates, HTML entities are escaped by default.
+      // Default assumption is we DON'T want that, so we'll reverse it.
       try {
-        // With lodash teplates, HTML entities are escaped by default.
-        // Default assumption is we DON'T want that, so we'll reverse it.
         if (!inputs.escapeHTMLEntities) {
           result = _.unescape(result);
         }
