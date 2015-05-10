@@ -1,111 +1,127 @@
 module.exports = {
+
+
   friendlyName: 'List directory contents',
+
+
   description: 'List contents of a directory on the local filesystem.',
+
+
   cacheable: true,
 
+
   inputs: {
+
     dir: {
+      friendlyName: 'Directory path',
       example: '/Users/mikermcneil/.tmp/foo',
-      description: 'Absolute path to the directory whose contents should be listed (if relative path provided, will be resolved from cwd).',
+      description: 'Path to the directory whose contents should be listed.',
+      extendedDescription: 'If a relative path is provided, it will be resolved to an absolute path from the context of the current working directory.',
       required: true
     },
+
     depth: {
-      description: 'The maximum number of "hops" (i.e. directories deep) to include directory contents from.  For instance, if you are running `ls` on "foo/" which has a subdirectory "foo/bar/baz/", if `depth` is set to 2, the results will include "foo/bar/baz/", but none of the files/folders contained within.',
-      example: 2
+      friendlyName: 'Max depth',
+      description: 'The maximum number of "hops" (i.e. directories deep) to include directory contents from.',
+      extendedDescription: 'For instance, if you are running `ls` on "foo/" which has a subdirectory "foo/bar/baz/", if `depth` is set to 2, the results will include "foo/bar/baz/", but none of the files/folders contained within.',
+      example: 2,
+      defaultsTo: 2
     },
-    types: {
-      description: 'The types of directory entries to return (defaults to ["all"])',
-      example: ['file'],
+
+    includeFiles: {
+      friendlyName: 'Include files?',
+      description: 'Whether or not to include files in result array.',
+      example: true,
+      defaultsTo: true
+    },
+
+    includeDirs: {
+      friendlyName: 'Include directories?',
+      description: 'Whether or not to include directories in result array.',
+      example: true,
+      defaultsTo: true
+    },
+
+    includeSymlinks: {
+      friendlyName: 'Include symlinks?',
+      description: 'Whether or not to include symbolic links in result array.',
+      example: true,
+      defaultsTo: true
     }
+
   },
 
-  defaultExit: 'success',
-  catchallExit: 'error',
 
   exits: {
-    error: {
-      description: 'Triggered when a filesystem error occurs'
-    },
+
     success: {
+      variableName: 'dirContents',
       example: [
         '/Users/mikermcneil/.tmp/foo/.gitignore'
       ]
     }
+
   },
 
+
   fn: function (inputs, exits) {
-
     var path = require('path');
+    var Walker = require('walker');
 
-    try {
+    // Ensure we've got an absolute path.
+    inputs.dir = path.resolve(inputs.dir);
 
-      // Ensure we've got an absolute path
-      inputs.dir = path.resolve(inputs.dir);
+    // Determine the depth of the top-level directory we're walking,
+    // for comparison later on.
+    var topLvlDirDepth = inputs.dir.split(path.sep).length;
 
-      var spinlock;
-      var results = [];
+    // Initialize the walker and teach it to skip directories that are
+    // deeper than requested.
+    var walker = Walker(inputs.dir);
+    walker.filterDir(function(dir, stat) {
+      if (dir.split(path.sep).length > (topLvlDirDepth + inputs.depth)) {
+        return false;
+      }
+      return true;
+    });
 
-      // Default depth to 0 (infinite recursion)
-      var depth = inputs.depth || 0;
-
-      // Get the depth of the directory we're walking, for comparison
-      var dirDepth = inputs.dir.split(path.sep).length;
-
-      // Default types to "all"
-      var types = inputs.types || 'all';
-
-      // Initialize the walker
-      var walker = require('walker')(inputs.dir)
-
-      // Skip directories that are deeper than requested
-      .filterDir(function(dir, stat) {
-        if (depth && dir.split(path.sep).length > (dirDepth + depth)) {
-          return false;
+    // Accumulate results array by listing file, directory, and/or symlink
+    // entries from the specified directory.
+    var results = [];
+    if (inputs.includeFiles) {
+      walker.on('file', function (entry, stat) {
+        // Filter out files that are deeper than requested
+        if (entry.split(path.sep).length <= (topLvlDirDepth + inputs.depth)) {
+          results.push(entry);
         }
-        return true;
-      })
-      // Handle errors
-      .on('error', function (err){
-        if (spinlock) return;
-        spinlock = true;
-        return exits.error(err);
-      })
-      // When walking is done, return the results
-      .on('end', function (){
-        if (spinlock) return;
-        spinlock = true;
-        return exits.success(results);
       });
-
-      // Include file entries if requested
-      if (types == 'all' || types.indexOf('file') > -1) {
-        walker.on('file', function (entry, stat) {
-          // Filter out files that are deeper than requested
-          if (!depth || (entry.split(path.sep).length <= (dirDepth + depth))) {
-            results.push(entry);
-          }
-        });
-      }
-
-      // Include directory entries if requested
-      if (types == 'all' || types.indexOf('dir') > -1) {
-        walker.on('dir', function (entry, stat) {
-          if (entry===inputs.dir) return;
-          results.push(entry);
-        });
-      }
-
-      // Include symlink entries if requested
-      if (types == 'all' || types.indexOf('symlink') > -1) {
-        walker.on('symlink', function (entry, stat) {
-          if (entry===inputs.dir) return;
-          results.push(entry);
-        });
-      }
     }
-    catch(e){
-      return exits.error(e);
+    if (inputs.includeDirs) {
+      walker.on('dir', function (entry, stat) {
+        if (entry===inputs.dir) return;
+        results.push(entry);
+      });
     }
+    if (inputs.includeSymlinks) {
+      walker.on('symlink', function (entry, stat) {
+        if (entry===inputs.dir) return;
+        results.push(entry);
+      });
+    }
+
+    // When walking is done, because of an error or otherwise,
+    // return the results.
+    var spinlock;
+    walker.on('error', function (err){
+      if (spinlock) return;
+      spinlock = true;
+      return exits.error(err);
+    });
+    walker.on('end', function (){
+      if (spinlock) return;
+      spinlock = true;
+      return exits.success(results);
+    });
   }
 };
 
