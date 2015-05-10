@@ -1,13 +1,13 @@
 module.exports = {
 
 
-  friendlyName: 'Template file',
+  friendlyName: 'Render template',
 
 
-  description: 'Read file at source path, replace substrings with provided data, then write to destination path.',
+  description: 'Read file at source path as a template, render with provided data, then write to destination path.',
 
 
-  extendedDescription: 'Uses lodash template syntax (e.g. `"Hi there, <%=firstName%>!"`)',
+  extendedDescription: 'Uses Lodash template syntax (e.g. `<%= %>`, `<%- %>`, `<% %>`)  Also provides access to the Node.js core utility module (as `util`), as well as Lodash itself (as `_`).',
 
 
   inputs: {
@@ -25,6 +25,9 @@ module.exports = {
     },
 
     data: {
+      friendlyName: 'Template data',
+      description: 'The data which will be accessible from the template',
+      extendedDescription: 'Each key will be a variable accessible in the template.  For instance, if you supply an array `[{name:"Chandra"}, {name:"Mary"}]` as the key "friends", then you will be able to access `friends` from the template; i.e. `<ul><% _.each(friends, function (friend){ %><li><%= friend.name %></li> <%}); %></ul>`  Use `<%= %>` to inject the contents of a variable as-is, `<%- %>` to HTML-escape them first, or `<% %>` to execute some JavaScript code.',
       typeclass: 'dictionary'
       // e.g. {
       //   email: {
@@ -40,12 +43,6 @@ module.exports = {
       description: 'Whether or not to overwrite existing file(s).',
       example: false,
       defaultsTo: false
-    },
-
-    escapeHTMLEntities: {
-      description: 'Whether or not to escape HTML entities',
-      example: false,
-      defaultsTo: false
     }
 
   },
@@ -58,129 +55,62 @@ module.exports = {
     },
 
     noTemplate: {
-      description: 'Source template file not found'
+      description: 'Source template file not found.'
     },
 
     missingData: {
       friendlyName: 'missing data',
       description: 'One or more variables used in the template were not provided in the template data.',
+      variableName: 'info',
+      example: {
+        message: 'Some variables (`me`,`friends`) were used in template "/code/machine/docs/.type-table.tpl", but not provided in the template data dictionary.',
+        missingVariables: ['me', 'friends']
+      }
     },
 
     couldNotRender: {
       description: 'Could not render the template due to invalid or unparseable syntax.'
+    },
+
+    alreadyExists: {
+      description: 'Something already exists at the specified path (overwrite by enabling the `force` input)'
     }
 
   },
 
 
   fn: function (inputs, exits) {
-
-    var util = require('util');
-    var fsx = require('fs-extra');
-    var _ = require('lodash');
-
-    var writeFileFromStr = require('machine').build(require('./write'));
+    var thisPack = require('../');
+    var MPStrings = require('machinepack-strings');
 
     // Read template from disk
-    fsx.readFile(inputs.source, 'utf8', function(err, contents) {
-      if (err) {
-        err = (typeof err === 'object' && err instanceof Error) ? err : new Error(err);
-        err.message = 'Template error: ' + err.message;
-        err.path = inputs.source;
-        if (err.code === 'ENOENT') {
-          return (exits.noTemplate)(err);
-        }
-        return exits.error(err);
-      }
-
-
-      // Now attempt to render the Lodash template.
-      // Templates are provided access to the Node.js `util` library,
-      // as well as `_` (Lodash itself).
-      // If the rendering fails because of a missing variable, try again
-      // with a fake variable inserted until the errors go away, or until
-      // we reach MAX_NUM_ITERATIONS.
-      var result;
-      var missingVars = [];
-      var morePotentiallyActionableErrorsExist = true;
-      var mostRecentTemplateErr;
-      var numIterations = 0;
-      var MAX_NUM_ITERATIONS = 10;
-      var dataWithFakeValues = _.cloneDeep(inputs.data||{});
-
-      while (numIterations < MAX_NUM_ITERATIONS && morePotentiallyActionableErrorsExist) {
-
-        // Track iterations to prevent this loop from spinning out of control.
-        numIterations++;
-
-        try {
-          // Attempt to render template and data into a single string using Lodash
-          result = _.template(contents, dataWithFakeValues, {
-            imports: {
-              util: util,
-              _: _
-            }
-          });
-
-          // If we made it here, there were no errors rendering the template.
-          morePotentiallyActionableErrorsExist = false;
-
-        }
-        catch (e) {
-
-          // Recognize lodash template error (scope variable not defined)
-          var isTplError = _.isObject(e) && (e.name === 'ReferenceError' || e.type === 'not_defined');
-          var missingVar = _.isArray(e.arguments) && e.arguments[0];
-
-          // If this is not a recognizable missing variable error, or if
-          // the name of the scope variable cannot be determined, then
-          // we need to stop.
-          if (!isTplError || !missingVar) {
-            mostRecentTemplateErr = e;
-            morePotentiallyActionableErrorsExist = false;
+    thisPack.read({
+      source: inputs.source
+    }).exec({
+      error: exits.error,
+      doesNotExist: exits.noTemplate,
+      success: function (contents) {
+        MPStrings.template({
+          templateStr: inputs.contents,
+          data: inputs.data
+        }).exec({
+          error: exits.error,
+          missingData: exits.missingData,
+          couldNotRender: exits.couldNotRender,
+          success: function (rendered) {
+            thisPack.write({
+              destination: inputs.destination,
+              string: rendered,
+              force: inputs.force
+            }).exec({
+              error: exits.error,
+              alreadyExists: exits.alreadyExists,
+              success: exits.success
+            });
           }
-          // Otherwise we can put a fake value in for the variable in
-          // order to deduce other missing variables for more complete
-          // error feedback.
-          else {
-            missingVars.push(missingVar);
-            dataWithFakeValues[missingVar] = {};
-          }
-        }
-      }
-
-      // If at least one missing variable was found, show it and use the
-      // `missingData` exit.
-      if (missingVars.length > 0) {
-        return exits.missingData({
-          message: util.format('%s were used in template "%s", but not provided in the template data dictionary.', (missingVars.length>1?'Some variables':'A variable') + ' (' + _.map(missingVars, function (varName){return '`'+varName+'`';}).join(',')+')', inputs.source),
-          missingVariables: missingVars
         });
       }
-      // Otherwise if the only template error was some other unrecognized thing,
-      // exit out of the `couldNotRender` exit.
-      if (mostRecentTemplateErr) {
-        return exits.couldNotRender(mostRecentTemplateErr);
-      }
-
-      // With lodash teplates, HTML entities are escaped by default.
-      // Default assumption is we DON'T want that, so we'll reverse it.
-      try {
-        if (!inputs.escapeHTMLEntities) {
-          result = _.unescape(result);
-        }
-      }
-      catch (e) {
-        return exits.error(e);
-      }
-
-      // Finally, write templated string to disk
-      writeFileFromStr({
-        force: inputs.force,
-        string: result,
-        destination: inputs.destination
-      })
-      .exec(exits);
     });
+
   }
 };
