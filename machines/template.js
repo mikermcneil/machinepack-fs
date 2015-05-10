@@ -64,7 +64,10 @@ module.exports = {
     missingData: {
       friendlyName: 'missing data',
       description: 'One or more variables used in the template were not provided in the template data.',
+    },
 
+    couldNotRender: {
+      description: 'Could not render the template due to invalid or unparseable syntax.'
     }
 
   },
@@ -90,37 +93,74 @@ module.exports = {
         return exits.error(err);
       }
 
-      // Render template and data into a single string using Lodash
+
+      // Now attempt to render the Lodash template.
+      // Templates are provided access to the Node.js `util` library,
+      // as well as `_` (Lodash itself).
+      // If the rendering fails because of a missing variable, try again
+      // with a fake variable inserted until the errors go away, or until
+      // we reach MAX_NUM_ITERATIONS.
       var result;
-      try {
-        result = _.template(contents, inputs.data||{}, {
+      var missingVars = [];
+      var morePotentiallyActionableErrorsExist = true;
+      var mostRecentTemplateErr;
+      var numIterations = 0;
+      var MAX_NUM_ITERATIONS = 10;
+      var dataWithFakeValues = _.cloneDeep(inputs.data||{});
 
-          // Provide access to `util` and `_` libs from within template.
-          imports: {
-            util: util,
-            _: _
-          }
+      while (numIterations < MAX_NUM_ITERATIONS && morePotentiallyActionableErrorsExist) {
 
-        });
-      } catch (e) {
+        // Track iterations to prevent this loop from spinning out of control.
+        numIterations++;
 
-        // Recognize lodash template error (scope variable not defined)
-        var isTplError = _.isObject(e) && (e.name === 'ReferenceError' || e.type === 'not_defined');
-        if (isTplError) {
-          var undefinedScopeVarName = _.isArray(e.arguments) && e.arguments[0];
-          var output = {
-            undefinedScopeVarName: undefinedScopeVarName || '',
-            message:
-              undefinedScopeVarName ?
-              util.format('The variable `%s` is used in template "%s", but no value for `%s` was provided as template data.', undefinedScopeVarName, inputs.source, undefinedScopeVarName)
-              :
-              util.format('There is some unparseable or invalid syntax in template "%s". Details:\n', inputs.source, e.stack)
-          };
-          return exits.missingData(output);
+        try {
+          // Attempt to render template and data into a single string using Lodash
+          result = _.template(contents, dataWithFakeValues, {
+            imports: {
+              util: util,
+              _: _
+            }
+          });
+
+          // If we made it here, there were no errors rendering the template.
+          morePotentiallyActionableErrorsExist = false;
+
         }
+        catch (e) {
 
-        // Unrecognized error
-        return exits.error(e);
+          // Recognize lodash template error (scope variable not defined)
+          var isTplError = _.isObject(e) && (e.name === 'ReferenceError' || e.type === 'not_defined');
+          var missingVar = _.isArray(e.arguments) && e.arguments[0];
+
+          // If this is not a recognizable missing variable error, or if
+          // the name of the scope variable cannot be determined, then
+          // we need to stop.
+          if (!isTplError || !missingVar) {
+            mostRecentTemplateErr = e;
+            morePotentiallyActionableErrorsExist = false;
+          }
+          // Otherwise we can put a fake value in for the variable in
+          // order to deduce other missing variables for more complete
+          // error feedback.
+          else {
+            missingVars.push(missingVar);
+            dataWithFakeValues[missingVar] = {};
+          }
+        }
+      }
+
+      // If at least one missing variable was found, show it and use the
+      // `missingData` exit.
+      if (missingVars.length > 0) {
+        return exits.missingData({
+          message: util.format('%s were used in template "%s", but not provided in the template data dictionary.', (missingVars.length>1?'Some variables':'A variable') + ' (' + _.map(missingVars, function (varName){return '`'+varName+'`';}).join(',')+')', inputs.source),
+          missingVariables: missingVars
+        });
+      }
+      // Otherwise if the only template error was some other unrecognized thing,
+      // exit out of the `couldNotRender` exit.
+      if (mostRecentTemplateErr) {
+        return exits.couldNotRender(mostRecentTemplateErr);
       }
 
       try {
