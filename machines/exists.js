@@ -19,7 +19,6 @@ module.exports = {
 
   },
 
-  defaultExit: 'exists',
 
   exits: {
     error: {
@@ -28,7 +27,7 @@ module.exports = {
     doesNotExist: {
       description: 'The specified path is empty'
     },
-    exists: {
+    success: {
       description: 'A file or directory exists at the specified path'
     }
   },
@@ -40,7 +39,7 @@ module.exports = {
 
     fsx.exists(Path.resolve(process.cwd(),inputs.path), function(exists) {
       if (!exists) {return exits.doesNotExist();}
-      return exits.exists();
+      return exits.success();
     });
   }
 };
