@@ -16,7 +16,7 @@ module.exports = {
   inputs: {
 
     json: {
-      typeclass: '*',
+      example: '*',
       description: 'The data to write to disk as JSON',
       required: true
     },

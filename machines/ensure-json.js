@@ -24,7 +24,7 @@ module.exports = {
     schema: {
       description: 'An example of what the parsed data should look like (used for type-coercion)',
       extendedDescription: 'If file does not exist, this schema will be used as the contents of the newly created JSON file.',
-      typeclass: '*',
+      example: '*',
       required: true
     }
 

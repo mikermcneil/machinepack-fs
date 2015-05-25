@@ -23,7 +23,7 @@ module.exports = {
 
     schema: {
       description: 'An example of what the parsed data should look like (used for type-coercion)',
-      typeclass: '*',
+      example: '*',
       required: true
     }
 

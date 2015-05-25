@@ -31,7 +31,7 @@ module.exports = {
       friendlyName: 'Template data',
       description: 'The data which will be accessible from the template',
       extendedDescription: 'Each key will be a variable accessible in the template.  For instance, if you supply an array `[{name:"Chandra"}, {name:"Mary"}]` as the key "friends", then you will be able to access `friends` from the template; i.e. `<ul><% _.each(friends, function (friend){ %><li><%= friend.name %></li> <%}); %></ul>`  Use `<%= %>` to inject the contents of a variable as-is, `<%- %>` to HTML-escape them first, or `<% %>` to execute some JavaScript code.',
-      typeclass: 'dictionary'
+      example: {}
       // e.g. {
       //   email: {
       //     from: 'mikermcneil@sailsjs.org',
