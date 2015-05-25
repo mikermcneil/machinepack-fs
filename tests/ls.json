@@ -6,8 +6,7 @@
       "using": {
         "dir": "./"
       },
-      "outcome": "success",
-      "returns": ""
+      "outcome": "success"
     },
     {
       "todo": false,
@@ -15,8 +14,7 @@
         "dir": "./",
         "depth": 2
       },
-      "outcome": "success",
-      "returns": ""
+      "outcome": "success"
     },
     {
       "todo": false,
@@ -24,8 +22,7 @@
         "dir": "./",
         "depth": 1
       },
-      "outcome": "success",
-      "returns": ""
+      "outcome": "success"
     },
     {
       "todo": false,
@@ -33,8 +30,7 @@
         "dir": "./",
         "depth": -1
       },
-      "outcome": "success",
-      "returns": ""
+      "outcome": "success"
     },
     {
       "todo": false,
@@ -42,8 +38,7 @@
         "dir": "/Users/mikermcneil/Desktop",
         "depth": "1"
       },
-      "outcome": "success",
-      "returns": ""
+      "outcome": "success"
     },
     {
       "todo": false,
@@ -51,8 +46,7 @@
         "dir": "/Users/mikermcneil/Desktop",
         "depth": "sdagsaggsad"
       },
-      "outcome": "error",
-      "returns": ""
+      "outcome": "error"
     }
   ]
 }
