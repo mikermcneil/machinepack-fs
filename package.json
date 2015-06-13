@@ -1,6 +1,6 @@
 {
   "name": "machinepack-fs",
-  "version": "4.1.0",
+  "version": "5.0.0",
   "description": "Work with the local filesystem; list files, write files, etc.",
   "scripts": {
     "test": "node ./node_modules/test-machinepack-mocha/bin/testmachinepack-mocha.js"
