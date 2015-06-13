@@ -4,7 +4,7 @@ module.exports = {
   friendlyName: 'Ensure JSON file',
 
 
-  description: 'Read or write a JSON file.',
+  description: 'Attempt to read from a JSON file, and if it does not exist, create it.',
 
 
   extendedDescription: 'Assumes file is encoded using utf8.',
@@ -23,9 +23,9 @@ module.exports = {
 
     schema: {
       description: 'An example of what the parsed data should look like (used for type-coercion)',
-      extendedDescription: 'If file does not exist, this schema will be used as the contents of the newly created JSON file.',
+      extendedDescription: 'If file does not exist, a "base value" will be derived from this example schema and used as the contents of the newly created JSON file.',
       example: '*',
-      required: true
+      defaultsTo: '*'
     }
 
   },
@@ -38,7 +38,7 @@ module.exports = {
     },
 
     success: {
-      description: 'Returns the data stored in file at `source` path',
+      description: 'Returns the data which is now stored in the JSON file.',
       getExample: function (inputs){
         return inputs.schema;
       }
@@ -48,11 +48,10 @@ module.exports = {
 
 
   fn: function (inputs, exits) {
-    var Machine = require('machine');
-    var readJson = Machine.build(require('./read-json'));
-    var writeJson = Machine.build(require('./write-json'));
+    var rttc = require('rttc');
+    var thisPack = require('../');
 
-    readJson({
+    thisPack.readJson({
       source: inputs.path,
       schema: inputs.schema
     }).exec({
@@ -66,18 +65,25 @@ module.exports = {
         return exits.success(data);
       },
       doesNotExist: function (){
-        // If the JSON file does not exist, create it
-        writeJson({
-          destination: inputs.path,
-          json: inputs.schema
-        }).exec({
-          error: function (err){
-            return exits.error(err);
-          },
-          success: function (){
-            return exits.success(inputs.schema);
-          }
-        });// </writeJson>
+        try {
+          // If the JSON file does not exist, create it using the base value
+          // for the provided schema.
+          var baseVal = rttc.coerce(rttc.infer(inputs.schema));
+          thisPack.writeJson({
+            destination: inputs.path,
+            json: baseVal
+          }).exec({
+            error: function (err){
+              return exits.error(err);
+            },
+            success: function (){
+              return exits.success(baseVal);
+            }
+          });// </writeJson>
+        }
+        catch (e) {
+          return exits.error(e);
+        }
       }//</readJson.doesNotExist>
     });//</readJson>
 
