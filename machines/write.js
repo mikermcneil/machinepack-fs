@@ -57,7 +57,7 @@ module.exports = {
 
     // In case we ended up here w/ a relative path,
     // resolve it using the process's CWD
-    inputs.destination = path.resolve(process.cwd(), inputs.destination);
+    inputs.destination = path.resolve(inputs.destination);
 
     // Only override an existing file if `inputs.force` is true
     fsx.exists(inputs.destination, function(exists) {

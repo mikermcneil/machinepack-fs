@@ -1,13 +1,16 @@
 module.exports = {
 
 
-  friendlyName: 'Read file',
+  friendlyName: 'Read file (sync)',
 
 
   description: 'Read a file on disk as a string.',
 
 
   extendedDescription: 'Assumes file contents are encoded using utf8.',
+
+
+  sync: true,
 
 
   cacheable: true,
@@ -46,17 +49,19 @@ module.exports = {
     // resolve it using the process's CWD
     inputs.source = path.resolve(inputs.source);
 
-    fs.readFile(inputs.source, 'utf8', function (err, contents) {
+    var contents;
+    try {
+      contents = fs.readFileSync(inputs.source, 'utf8');
       // It worked!
-      if (!err) {
-        return exits.success(contents);
-      }
-      // No need for `null` check here because we already know `err` is falsy
-      if (typeof err === 'object' && err.code === 'ENOENT') {
+      return exits.success(contents);
+    }
+    catch (e) {
+      if (e.code === 'ENOENT') {
         return exits.doesNotExist();
       }
       // Some unrecognized error
       return exits.error(err);
-    });
+    }
   }
+
 };

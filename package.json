@@ -48,7 +48,8 @@
       "mkdir",
       "ensure-dir",
       "ensure-json",
-      "write-sync"
+      "write-sync",
+      "read-sync"
     ],
     "testsUrl": "https://travis-ci.org/mikermcneil/machinepack-fs"
   }
