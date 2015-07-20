@@ -7,7 +7,7 @@ module.exports = {
   description: 'Read a file on disk as a string.',
 
 
-  extendedDescription: 'Assumes file contents are encoded using utf8.',
+  extendedDescription: 'Assumes file contents are encoded using utf8. This machine should **NEVER** be used in request handling code!',
 
 
   sync: true,

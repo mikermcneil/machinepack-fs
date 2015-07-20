@@ -7,6 +7,9 @@ module.exports = {
   description: 'Generate a file on the local filesystem using the specified utf8 string as its contents.',
 
 
+  extendedDescription: 'Encodes file contents as utf8. This machine should **NEVER** be used in request handling code!',
+
+
   sync: true,
 
 
