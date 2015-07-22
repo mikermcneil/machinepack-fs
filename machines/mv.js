@@ -24,6 +24,10 @@ module.exports = {
 
   exits: {
 
+    doesNotExist: {
+      description: 'No file or folder exists at the provided souce path.'
+    },
+
     success: {
       description: 'Done.'
     }
@@ -35,7 +39,12 @@ module.exports = {
     var fsx = require('fs-extra');
 
     fsx.move(inputs.source, inputs.destination, function (err) {
-      if (err) return exits.error(err);
+      if (err) {
+        if (err.code === 'ENOENT') {
+          return exits.doesNotExist();
+        }
+        return exits.error(err);
+      }
       return exits.success();
     });
   },
