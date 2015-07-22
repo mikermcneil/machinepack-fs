@@ -61,6 +61,10 @@ module.exports = {
 
   exits: {
 
+    notFound: {
+      description: 'Nothing exists at the specified directory path.'
+    },
+
     success: {
       variableName: 'dirContents',
       example: [
@@ -147,6 +151,9 @@ module.exports = {
     walker.on('error', function (err){
       if (spinlock) return;
       spinlock = true;
+      if (err.code === 'ENOENT') {
+        return exits.notFound();
+      }
       return exits.error(err);
     });
     walker.on('end', function (){
