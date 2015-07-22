@@ -4,10 +4,10 @@ module.exports = {
   friendlyName: 'Copy (cp)',
 
 
-  description: 'Copy file or directory located at source path to the destination path.',
+  description: 'Copy file or directory located at source path to the destination path (overwriting an existing file at the destination path, if there is one).',
 
 
-  extendedDescription: 'Includes all of its descendant files and directories (i.e. `cp -r`)',
+  extendedDescription: 'Includes all of its descendant files and directories (i.e. `cp -r`).',
 
 
   inputs: {
@@ -29,6 +29,10 @@ module.exports = {
 
   exits: {
 
+    doesNotExist: {
+      description: 'No file or folder exists at the provided souce path.'
+    },
+
     success: {
       description: 'Done.'
     }
@@ -36,11 +40,16 @@ module.exports = {
   },
 
   fn: function (inputs, exits) {
-
+    var path = require('path');
     var fsx = require('fs-extra');
 
-    fsx.copy(inputs.source, inputs.destination, function (err) {
-      if (err) return exits.error(err);
+    fsx.copy(path.resolve(inputs.source), path.resolve(inputs.destination), function (err) {
+      if (err) {
+        if (err.code === 'ENOENT') {
+          return exits.doesNotExist();
+        }
+        return exits.error(err);
+      }
       return exits.success();
     });
   }

@@ -61,7 +61,7 @@ module.exports = {
 
   exits: {
 
-    notFound: {
+    doesNotExist: {
       description: 'Nothing exists at the specified directory path.'
     },
 
@@ -152,7 +152,7 @@ module.exports = {
       if (spinlock) return;
       spinlock = true;
       if (err.code === 'ENOENT') {
-        return exits.notFound();
+        return exits.doesNotExist();
       }
       return exits.error(err);
     });
