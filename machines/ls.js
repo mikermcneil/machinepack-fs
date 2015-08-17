@@ -128,7 +128,6 @@ module.exports = {
         if ( !tooHidden ) {
           results.push(entry);
         }
-        results.push(entry);
       });
     }
     if (inputs.includeSymlinks) {
@@ -141,7 +140,6 @@ module.exports = {
         if ( !tooHidden ) {
           results.push(entry);
         }
-        results.push(entry);
       });
     }
 
