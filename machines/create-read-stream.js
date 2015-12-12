@@ -36,7 +36,8 @@ module.exports = {
   exits: {
 
     success: {
-      variableName: 'readableStream',
+      variableName: 'Readable stream',
+      outputDescription: 'A stream of data from the source file\'s contents.',
       example: '==='
     },
 
