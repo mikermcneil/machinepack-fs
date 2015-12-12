@@ -28,13 +28,7 @@ module.exports = {
       description: 'Absolute path to the source file (if relative path is provided, will resolve path from current working directory)',
       example: '/Users/mikermcneil/.tmp/foo',
       required: true
-    },
-
-    // maxLifespan: {
-    //   description: 'The maximum number of miliseconds to allow the source file to remain open.',
-    //   example: 120000,
-    //   defaultsTo: 120000
-    // }
+    }
 
   },
 
@@ -69,15 +63,8 @@ module.exports = {
     // ^ Since event handlers are garbage collected when the event emitter is itself gc()'d, it is safe
     // for us to bind this event handler here.
 
-    // Finally, set an alarm for `maxLifespan` ms from now.  If the stream is still hanging around
-    // (i.e. it hasn't gotten sucked dry or errored out by then) we'll go ahead and force it closed
-    // ourselves to prevent memory leaks.
-    // setTimeout(function (){
-    // }, );
-
     return exits.success(file__);
-  },
-
+  }
 
 
 };
