@@ -24,10 +24,6 @@ module.exports = {
 
   exits: {
 
-    error: {
-      description: 'Unexpected error occurred.'
-    },
-
     success: {
       description: 'Directory was either just created, or already existed, at the specified path.'
     }

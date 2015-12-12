@@ -26,10 +26,6 @@ module.exports = {
 
   exits: {
 
-    error: {},
-
-    success: {},
-
     alreadyExists: {
       description: 'Something already exists at the specified path (overwrite by enabling the `force` input)'
     }

@@ -26,10 +26,6 @@ module.exports = {
 
     doesNotExist: {
       description: 'No file or folder exists at the provided souce path.'
-    },
-
-    success: {
-      description: 'Done.'
     }
 
   },

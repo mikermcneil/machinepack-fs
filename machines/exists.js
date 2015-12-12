@@ -21,15 +21,15 @@ module.exports = {
 
 
   exits: {
-    error: {
-      description: 'Unexpected error occurred'
-    },
+
     doesNotExist: {
       description: 'The specified path is empty'
     },
+
     success: {
       description: 'A file or directory exists at the specified path'
     }
+
   },
 
   fn: function (inputs, exits) {

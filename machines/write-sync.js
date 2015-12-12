@@ -45,7 +45,7 @@ module.exports = {
     },
 
     success: {
-      description: 'OK.'
+      description: 'File written successfully.'
     }
 
   },

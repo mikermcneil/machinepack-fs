@@ -22,10 +22,12 @@ module.exports = {
     },
 
     schema: {
-      description: 'An example of what the parsed data should look like (used for type-coercion)',
+      description: 'An example schema (in RTTC exemplar syntax) describing what the parsed data should look like (used for type-coercion)',
       extendedDescription: 'If file does not exist, a "base value" will be derived from this example schema and used as the contents of the newly created JSON file.',
+      moreInfoUrl: 'https://github.com/node-machine/rttc#types--terminology',
       example: '*',
-      defaultsTo: '*'
+      defaultsTo: '*',
+      constant: true
     }
 
   },

@@ -26,9 +26,6 @@ module.exports = {
 
   exits: {
 
-    success: {
-      description: 'Done.'
-    }
 
   },
 
