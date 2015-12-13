@@ -61,7 +61,6 @@ module.exports = {
     // as a spinlock to ensure this machine fn does not exit more than once.
     var alreadyExited;
 
-
     // Now create the read stream.  This is synchronous, but it also doesn't tell us
     // whether or not the file at the specified source path actually exists, or whether
     // we can access that path, etc.  That's all up to the machine which consumes this
@@ -86,14 +85,8 @@ module.exports = {
       }
 
       // If any other sort of miscellaneous error occurs... (as long as we haven't exited yet)
-      console.error('misc err!',err);
       alreadyExited = true;
       return exits.error(err);
-
-
-      // Note that, if we've already exited, there's really not a whole lot we can do--since
-      // the error might be occurring AFTER we've already called the `success` exit.  So instead of triggering
-      // our error exit AGAIN, we just ignore it.
     });
 
 
@@ -101,10 +94,9 @@ module.exports = {
     file__.once('open', function (fd){
 
       // Once the file is open, use the file descriptor (`fd`) to transactionally ensure that it is not
-      // a directory (i.e. that the first `.read()` will work) using `fstat`.
-      // That's because, even if this is a directory, it can still be _OPENED_ just fine-- but the first time
-      // you try to read it... BAM. Check out @modchan's answer at http://stackoverflow.com/a/24471971/486547
-      // for more details.
+      // a directory using `fstat`. Why do we have to do this?  Well, even if this is a directory, it can
+      // still be _OPENED_ just fine-- but the first time you try to read it... BAM. Check out @modchan's
+      // SO answer at http://stackoverflow.com/a/24471971/486547 for more details & analysis.
       require('fs').fstat(fd, function (err, stats) {
         if (err) {
           alreadyExited = true;
