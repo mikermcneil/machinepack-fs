@@ -50,7 +50,7 @@
       "ensure-json",
       "write-sync",
       "read-sync",
-      "create-read-stream"
+      "read-stream"
     ],
     "testsUrl": "https://travis-ci.org/mikermcneil/machinepack-fs"
   }
