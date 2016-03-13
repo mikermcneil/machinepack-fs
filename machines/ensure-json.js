@@ -36,13 +36,13 @@ module.exports = {
 
   exits: {
 
-    couldNotParse: {
-      description: 'Could not parse file as JSON.'
+    success: {
+      outputDescription: 'The data which is stored in the JSON file now.',
+      like: 'schema'
     },
 
-    success: {
-      description: 'Returns the data which is now stored in the JSON file.',
-      like: 'schema'
+    couldNotParse: {
+      description: 'Could not parse file as JSON.'
     }
 
   },

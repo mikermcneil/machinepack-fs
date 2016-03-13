@@ -24,6 +24,10 @@ module.exports = {
 
   exits: {
 
+    success: {
+      description: 'Contents at source path were moved successfully to the destination.'
+    },
+
     doesNotExist: {
       description: 'No file or folder exists at the provided souce path.'
     }
@@ -32,7 +36,12 @@ module.exports = {
 
 
   fn: function(inputs, exits) {
+    var path = require('path');
     var fsx = require('fs-extra');
+
+    // Ensure absolute paths.
+    inputs.source = path.resolve(inputs.source);
+    inputs.destination = path.resolve(inputs.destination);
 
     fsx.move(inputs.source, inputs.destination, function (err) {
       if (err) {

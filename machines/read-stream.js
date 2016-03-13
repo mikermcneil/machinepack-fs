@@ -77,7 +77,15 @@ module.exports = {
     // Also bind a one-time error handler specifically to catch a few specific errors that can
     // occur up-front.
     file__.once('error', function (err) {
-      if (alreadyExited) {return;}
+      // When receiving subsequent read errors on this Readable stream after
+      // the first (or after we've exited successfully), the best we can do
+      // is remain silent.
+      if (alreadyExited) {
+        // Note that in the future, we could expose an optional input
+        // (e.g. `onUnexpectedError`) which accepts a notifier function that
+        // could be called in this scenario.
+        return;
+      }
 
       if (err.code === 'ENOENT') {
         alreadyExited = true;

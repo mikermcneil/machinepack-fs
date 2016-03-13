@@ -23,7 +23,7 @@ module.exports = {
 
     destination: {
       example: '/Users/mikermcneil/.tmp/bar.json',
-      description: 'Absolute path to the destination file (if relative path is provided, will resolve path from current working directory)',
+      description: 'Absolute path for the destination file (if relative path is provided, will resolve path from current working directory)',
       required: true
     },
 

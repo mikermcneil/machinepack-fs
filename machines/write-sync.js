@@ -21,6 +21,7 @@ module.exports = {
     string: {
       description: 'Text to write to the file (if omitted, will create an empty file)',
       example: 'lots of words, utf8 things you know',
+      defaultsTo: ''
     },
 
     destination: {
@@ -40,13 +41,13 @@ module.exports = {
 
   exits: {
 
+    success: {
+      description: 'File written successfully.'
+    },
+
     alreadyExists: {
       description: 'Something already exists at the specified path (overwrite by enabling the `force` input)'
     },
-
-    success: {
-      description: 'File written successfully.'
-    }
 
   },
 
@@ -55,9 +56,6 @@ module.exports = {
     var path = require('path');
     var fs = require('fs');
     var fsx = require('fs-extra');
-
-    // Coerce `string` input into an actual string
-    inputs.string = inputs.string || '';
 
     // In case we ended up here w/ a relative path,
     // resolve it using the process's CWD

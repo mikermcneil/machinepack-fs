@@ -13,7 +13,7 @@
   "author": "Mike McNeil",
   "license": "MIT",
   "dependencies": {
-    "fs-extra": "0.10.0",
+    "fs-extra": "0.26.5",
     "machine": "~12.1.0",
     "machinepack-json": "~2.0.0",
     "machinepack-strings": "~5.0.0",
@@ -48,7 +48,8 @@
       "ensure-json",
       "write-sync",
       "read-sync",
-      "read-stream"
+      "read-stream",
+      "write-stream"
     ],
     "testsUrl": "https://travis-ci.org/mikermcneil/machinepack-fs"
   }
