@@ -31,22 +31,6 @@
         "depth": -1
       },
       "outcome": "success"
-    },
-    {
-      "todo": false,
-      "using": {
-        "dir": "/Users/mikermcneil/Desktop",
-        "depth": "1"
-      },
-      "outcome": "success"
-    },
-    {
-      "todo": false,
-      "using": {
-        "dir": "/Users/mikermcneil/Desktop",
-        "depth": "sdagsaggsad"
-      },
-      "outcome": "error"
     }
   ]
 }
