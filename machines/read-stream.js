@@ -98,19 +98,18 @@ module.exports = {
       // still be _OPENED_ just fine-- but the first time you try to read it... BAM. Check out @modchan's
       // SO answer at http://stackoverflow.com/a/24471971/486547 for more details & analysis.
       fs.fstat(fd, function (err, stats) {
+        if (alreadyExited) {return;}
+
         if (err) {
-          if (alreadyExited) {return;}
           alreadyExited = true;
           return exits.error(err);
         }
 
         if (stats.isDirectory()) {
-          if (alreadyExited) {return;}
           alreadyExited = true;
           return exits.isDirectory();
         }
 
-        if (alreadyExited) {return;}
         alreadyExited = true;
         return exits.success(file__);
       }); //</fstat()>

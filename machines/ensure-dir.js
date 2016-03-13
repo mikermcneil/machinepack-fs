@@ -32,13 +32,14 @@ module.exports = {
 
 
   fn: function(inputs, exits) {
+    var path = require('path');
     var fsx = require('fs-extra');
 
     // In case we ended up w/ a relative path, make it absolute.
-    inputs.dir = require('path').resolve(process.cwd(), inputs.dir);
+    inputs.dir = path.resolve(process.cwd(), inputs.dir);
 
     fsx.ensureDir(inputs.dir, function(err) {
-      if (err) return exits.error(err);
+      if (err) {return exits.error(err);}
       return exits.success();
     });
   }

@@ -121,7 +121,7 @@ module.exports = {
     if (inputs.includeDirs) {
       walker.on('dir', function (entry, stat) {
         // If this is the top-level directory, exclude it.
-        if (entry === inputs.dir) return;
+        if (entry === inputs.dir) { return; }
         // Add the new entry to our result list unless it is:
         //  • hidden (and the `includeHidden` input is set to false)
         var tooHidden = path.basename(entry).match(/^\./) && !inputs.includeHidden;
@@ -133,7 +133,7 @@ module.exports = {
     if (inputs.includeSymlinks) {
       walker.on('symlink', function (entry, stat) {
         // If this is the top-level directory, exclude it.
-        if (entry===inputs.dir) return;
+        if (entry===inputs.dir) { return; }
         // Add the new entry to our result list unless it is:
         //  • hidden (and the `includeHidden` input is set to false)
         var tooHidden = path.basename(entry).match(/^\./) && !inputs.includeHidden;
@@ -147,7 +147,7 @@ module.exports = {
     // return the results.
     var spinlock;
     walker.on('error', function (err){
-      if (spinlock) return;
+      if (spinlock) { return; }
       spinlock = true;
       if (err.code === 'ENOENT') {
         return exits.doesNotExist();
@@ -155,7 +155,7 @@ module.exports = {
       return exits.error(err);
     });
     walker.on('end', function (){
-      if (spinlock) return;
+      if (spinlock) { return; }
       spinlock = true;
       return exits.success(results);
     });

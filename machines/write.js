@@ -15,6 +15,7 @@ module.exports = {
     string: {
       description: 'Text to write to the file (if omitted, will create an empty file)',
       example: 'lots of words, utf8 things you know',
+      defaultsTo: ''
     },
 
     destination: {
@@ -24,7 +25,7 @@ module.exports = {
     },
 
     force: {
-      description: 'Whether to overwrite existing file(s) which might exist at the destination path.',
+      description: 'Overwrite files or directories which might exist at or within the specified destination path?',
       example: false,
       defaultsTo: false
     }
@@ -34,26 +35,21 @@ module.exports = {
 
   exits: {
 
+    success: {
+      description: 'File written successfully.'
+    },
+
     alreadyExists: {
       description: 'Something already exists at the specified path (overwrite by enabling the `force` input)'
     },
-
-    success: {
-      description: 'Filewritten successfully.'
-    }
 
   },
 
 
   fn: function (inputs, exits) {
-
     var path = require('path');
     var fsx = require('fs-extra');
-    var _ = require('lodash');
-    var async = require('async');
 
-    // Coerce `string` input into an actual string
-    inputs.string = inputs.string || '';
 
     // In case we ended up here w/ a relative path,
     // resolve it using the process's CWD
@@ -62,24 +58,25 @@ module.exports = {
     // Only override an existing file if `inputs.force` is true
     fsx.exists(inputs.destination, function(exists) {
       if (exists && !inputs.force) {
-        return (exits.alreadyExists||exits.error)('Something else already exists at ::' + inputs.destination);
+        return exits.alreadyExists();
       }
 
-      async.series([
-        function deleteExistingFileIfNecessary(exits) {
-          if (!exists) return exits();
-          return fsx.remove(inputs.destination, exits);
-        },
-        function writeToDisk(exits) {
-          fsx.outputFile(inputs.destination, inputs.string, exits);
+      // Delete existing files and/or directories if necessary.
+      (function _deleteExistingFilesAndOrDirsIfNecessary(next) {
+        if (!exists) {
+          return next();
         }
-      ], function (err){
-        if (err) return exits(err);
-        return exits();
-      });
+        else {
+          fsx.remove(inputs.destination, next);
+        }
+      })(function nowWriteFileToDisk(err){
+        if (err) { return exits(err); }
 
-    });
+        // Now write the file to disk.
+        fsx.outputFile(inputs.destination, inputs.string, exits);
 
+      });//</after deleting existing file(s)/dir(s) if necessary>
+    });//</fsx.exists()>
   }
 
 

@@ -27,7 +27,8 @@ module.exports = {
       moreInfoUrl: 'https://github.com/node-machine/rttc#types--terminology',
       example: '*',
       defaultsTo: '*',
-      constant: true
+      constant: true,
+      isExemplar: true
     }
 
   },
@@ -41,9 +42,7 @@ module.exports = {
 
     success: {
       description: 'Returns the data which is now stored in the JSON file.',
-      getExample: function (inputs){
-        return inputs.schema;
-      }
+      like: 'schema'
     }
 
   },
@@ -62,9 +61,6 @@ module.exports = {
       },
       couldNotParse: function (parseErr){
         return exits.couldNotParse(parseErr);
-      },
-      success: function (data){
-        return exits.success(data);
       },
       doesNotExist: function (){
         try {
@@ -86,7 +82,10 @@ module.exports = {
         catch (e) {
           return exits.error(e);
         }
-      }//</readJson.doesNotExist>
+      },//</readJson.doesNotExist>
+      success: function (data){
+        return exits.success(data);
+      }//</readJson.success>
     });//</readJson>
 
   }

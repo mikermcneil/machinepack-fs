@@ -28,7 +28,7 @@ module.exports = {
     },
 
     force: {
-      description: 'Overwrite existing file(s)?',
+      description: 'Overwrite files or directories which might exist at or within the specified destination path?',
       example: false,
       defaultsTo: false
     }
@@ -38,48 +38,48 @@ module.exports = {
 
   exits: {
 
+    success: {
+      description: 'JSON file written successfully.'
+    },
+
     alreadyExists: {
       description: 'A file or folder already exists at the specified destination'
     },
-
-    success: {
-      description: 'JSON file written successfully.'
-    }
 
   },
 
 
   fn: function (inputs, exits) {
-
     var path = require('path');
     var fsx = require('fs-extra');
-    var _ = require('lodash');
-    var async = require('async');
+
 
     // In case we ended up here w/ a relative path,
     // resolve it using the process's CWD
-    inputs.destination = path.resolve(process.cwd(), inputs.destination);
+    inputs.destination = path.resolve(inputs.destination);
 
     // Only override an existing file if `inputs.force` is true
     fsx.exists(inputs.destination, function(exists) {
       if (exists && !inputs.force) {
-        return exits.alreadyExists('Something else already exists at ::' + inputs.destination);
+        return exits.alreadyExists();
       }
 
-      async.series([
-        function deleteExistingFileIfNecessary(next) {
-          if (!exists) return next();
-          return fsx.remove(inputs.destination, next);
-        },
-        function writeToDisk(next) {
-          fsx.outputJson(inputs.destination, inputs.json, next);
+      // Delete existing files and/or directories if necessary.
+      (function _deleteExistingFilesAndOrDirsIfNecessary(next) {
+        if (!exists) {
+          return next();
         }
-      ], function (err){
-        if (err) return exits.error(err);
-        return exits.success();
-      });
+        else {
+          fsx.remove(inputs.destination, next);
+        }
+      })(function nowWriteFileToDisk(err){
+        if (err) { return exits(err); }
 
-    });
+        // Now write the JSON file to disk.
+        fsx.outputJson(inputs.destination, inputs.json, exits);
+
+      });//</after deleting existing file(s)/dir(s) if necessary>
+    });//</fsx.exists()>
   }
 
 

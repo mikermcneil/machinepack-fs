@@ -27,7 +27,8 @@ module.exports = {
       moreInfoUrl: 'https://github.com/node-machine/rttc#types--terminology',
       example: '*',
       defaultsTo: '*',
-      constant: true
+      constant: true,
+      isExemplar: true
     }
 
   },

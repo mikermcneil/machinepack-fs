@@ -15,9 +15,9 @@ module.exports = {
 
   inputs: {
 
-    dir: {
+    path: {
       example: '/Users/mikermcneil/.tmp/foo',
-      description: 'The absolute path to the file or directory to remove',
+      description: 'The absolute path to the file or directory to remove.',
       required: true
     }
 
@@ -26,14 +26,18 @@ module.exports = {
 
   exits: {
 
+    success: {
+      description: 'The specified file or directory was removed.'
+    }
 
   },
 
   fn: function (inputs, exits) {
 
+    var path = require('path');
     var fsx = require('fs-extra');
 
-    fsx.remove(inputs.dir, function(err) {
+    fsx.remove(path.resolve(inputs.path), function(err) {
       if (err) {return exits.error(err);}
       return exits.success();
     });
