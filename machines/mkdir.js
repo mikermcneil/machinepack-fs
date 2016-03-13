@@ -65,7 +65,7 @@ module.exports = {
         if (err) { return exits(err); }
 
         // Now create the directory on disk.
-        fsx.mkdirs(inputs.destination, next);
+        fsx.mkdirs(inputs.destination, exits);
 
       });//</after deleting existing file(s)/dir(s) if necessary>
     });//</fsx.exists()>
