@@ -77,7 +77,7 @@ module.exports = {
     // Also bind a one-time error handler specifically to catch a few specific errors that can
     // occur up-front.
     file__.once('error', function (err) {
-      if (alreadyExited) return;
+      if (alreadyExited) {return;}
 
       if (err.code === 'ENOENT') {
         alreadyExited = true;
@@ -97,17 +97,20 @@ module.exports = {
       // a directory using `fstat`. Why do we have to do this?  Well, even if this is a directory, it can
       // still be _OPENED_ just fine-- but the first time you try to read it... BAM. Check out @modchan's
       // SO answer at http://stackoverflow.com/a/24471971/486547 for more details & analysis.
-      require('fs').fstat(fd, function (err, stats) {
+      fs.fstat(fd, function (err, stats) {
         if (err) {
+          if (alreadyExited) {return;}
           alreadyExited = true;
           return exits.error(err);
         }
 
         if (stats.isDirectory()) {
+          if (alreadyExited) {return;}
           alreadyExited = true;
           return exits.isDirectory();
         }
 
+        if (alreadyExited) {return;}
         alreadyExited = true;
         return exits.success(file__);
       }); //</fstat()>
