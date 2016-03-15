@@ -61,11 +61,12 @@ module.exports = {
   // });
   fn: function(inputs, exits) {
     var path = require('path');
-    var util = require('util');
+    var isFunction = require('lodash.isfunction');
+    var isObject = require('lodash.isobject');
     var fsx = require('fs-extra');
 
     // Check for the methods we need on the provided Readable source stream.
-    if (!util.isObject(inputs.sourceStream) || !util.isFunction(inputs.sourceStream.pipe) || !util.isFunction(inputs.sourceStream.on)) {
+    if (!isObject(inputs.sourceStream) || !isFunction(inputs.sourceStream.pipe) || !isFunction(inputs.sourceStream.on)) {
       return exits.error(new Error('Invalid stream provided (has no `.pipe()` and/or `.on()` methods).'));
     }
 
