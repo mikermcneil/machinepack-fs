@@ -43,7 +43,7 @@ module.exports = {
     },
 
     alreadyExists: {
-      description: 'A file or folder already exists at the specified destination'
+      description: 'A file or folder already exists at the specified destination.  Use `force` to overwrite.'
     },
 
   },
