@@ -10,7 +10,6 @@ module.exports = {
   inputs: {
 
     sourceStream: {
-      friendlyName: 'Source stream',
       description: 'The source (Readable) stream whose contents will be pumped to disk.',
       extendedDescription: 'Must be a utf8-encoded, modern (streams2 or streams3) Readable stream.',
       example: '===',
@@ -19,7 +18,7 @@ module.exports = {
 
     destination: {
       example: '/Users/mikermcneil/.tmp/bar.json',
-      description: 'Absolute path for the destination file (if relative path is provided, will resolve path from current working directory)',
+      description: 'Absolute path for the destination file (if relative path is provided, will resolve path from current working directory).',
       required: true
     },
 
@@ -39,7 +38,7 @@ module.exports = {
     },
 
     alreadyExists: {
-      description: 'Something already exists at the specified path (overwrite by enabling the `force` input)'
+      description: 'Something already exists at the specified path (overwrite by enabling the `force` input).'
     },
 
   },

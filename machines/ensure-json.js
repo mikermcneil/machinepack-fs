@@ -10,24 +10,22 @@ module.exports = {
   extendedDescription: 'Assumes file is encoded using utf8.',
 
 
-  idempotent: true,
+  sideEffects: 'idempotent',
 
 
   inputs: {
 
     path: {
-      description: 'Absolute path for the JSON file (if relative path is provided, will resolve path from current working directory)',
+      description: 'Absolute path for the JSON file (if relative path is provided, will resolve path from current working directory).',
       example: '/Users/mikermcneil/.tmp/foo.json',
       required: true
     },
 
     schema: {
-      description: 'An example schema (in RTTC exemplar syntax) describing what the parsed data should look like (used for type-coercion)',
+      description: 'An example schema (in RTTC exemplar syntax) describing what the parsed data should look like (used for type-coercion).',
       extendedDescription: 'If file does not exist, a "base value" will be derived from this example schema and used as the contents of the newly created JSON file.',
       moreInfoUrl: 'https://github.com/node-machine/rttc#types--terminology',
-      example: '*',
       defaultsTo: '*',
-      constant: true,
       isExemplar: true
     }
 
@@ -37,6 +35,7 @@ module.exports = {
   exits: {
 
     success: {
+      outputFriendlyName: 'Data from JSON file',
       outputDescription: 'The data which is stored in the JSON file now.',
       like: 'schema'
     },

@@ -7,7 +7,7 @@ module.exports = {
   description: 'List contents of a directory on the local filesystem.',
 
 
-  cacheable: true,
+  sideEffects: 'cacheable',
 
 
   inputs: {
@@ -21,7 +21,6 @@ module.exports = {
     },
 
     depth: {
-      friendlyName: 'Depth',
       description: 'The maximum number of "hops" (i.e. directories deep) to include directory contents from.',
       extendedDescription: 'For instance, if you are running `ls` on "foo/" which has a subdirectory "foo/bar/baz/", if `depth` is set to 2, the results will include "foo/bar/baz/", but none of the files/folders contained within.',
       example: 1,
@@ -29,29 +28,29 @@ module.exports = {
     },
 
     includeFiles: {
-      friendlyName: 'Files?',
-      description: 'Whether or not to include files',
+      friendlyName: 'Include files?',
+      description: 'Whether or not to include files.',
       example: true,
       defaultsTo: true
     },
 
     includeDirs: {
-      friendlyName: 'Directories?',
-      description: 'Whether or not to include directories',
+      friendlyName: 'Include directories?',
+      description: 'Whether or not to include directories.',
       example: true,
       defaultsTo: true
     },
 
     includeSymlinks: {
-      friendlyName: 'Symlinks?',
-      description: 'Whether or not to include symbolic links',
+      friendlyName: 'Include symlinks?',
+      description: 'Whether or not to include symbolic links.',
       example: true,
       defaultsTo: true
     },
 
     includeHidden: {
-      friendlyName: 'Hidden entries?',
-      description: 'Whether or not to include hidden files/directories/symlinks',
+      friendlyName: 'Include hidden entries?',
+      description: 'Whether or not to include hidden files/directories/symlinks.',
       example: false,
       defaultsTo: false
     }
@@ -61,15 +60,16 @@ module.exports = {
 
   exits: {
 
-    doesNotExist: {
-      description: 'Nothing exists at the specified directory path.'
-    },
-
     success: {
-      variableName: 'dirContents',
-      example: [
+      outputFriendlyName: 'Directory contents',
+      outputDescription: 'A list of the files and subdirectories contained in the specified directory.',
+      outputExample: [
         '/Users/mikermcneil/.tmp/foo/.gitignore'
       ]
+    },
+
+    doesNotExist: {
+      description: 'Nothing exists at the specified directory path.'
     }
 
   },

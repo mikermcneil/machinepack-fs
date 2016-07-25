@@ -19,7 +19,7 @@ module.exports = {
   inputs: {
 
     source: {
-      description: 'Absolute path to the source file (if relative path is provided, will resolve path from current working directory)',
+      description: 'Absolute path to the source file (if relative path is provided, will resolve path from current working directory).',
       example: '/Users/mikermcneil/.tmp/foo',
       required: true
     }
@@ -29,21 +29,21 @@ module.exports = {
 
   exits: {
 
-    doesNotExist: {
-      description: 'No file exists at the provided `source` path'
-    },
-
-    isDirectory: {
-      description: 'A directory (not the file we were expecting) is at the source path.'
-    },
-
     success: {
       description: 'The file exists and has been successfully opened.  The resulting stream may be read at any time.',
       extendedDescription: 'Note that, while this result stream is associated with an open file descriptor, it _is not flowing_.  '+
       'In other words, it is _paused_. That means you don\'t have to worry about using it immediately (i.e. before even one tick of the event loop elapses).',
-      variableName: 'Readable stream',
+      outputFriendlyName: 'Readable stream',
       outputDescription: 'A stream of data from the source file.',
-      example: '==='
+      outputExample: '==='
+    },
+
+    doesNotExist: {
+      description: 'No file exists at the provided `source` path.'
+    },
+
+    isDirectory: {
+      description: 'A directory (not the file we were expecting) is at the source path.'
     },
 
   },

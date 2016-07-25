@@ -28,11 +28,11 @@ module.exports = {
   exits: {
 
     success: {
-      description: 'New directory created successfully.'
+      description: 'New directory was created successfully.'
     },
 
     alreadyExists: {
-      description: 'Something already exists at the specified path (overwrite by enabling the `force` input)'
+      description: 'Something already exists at the specified path (overwrite by enabling the `force` input).'
     }
 
   },

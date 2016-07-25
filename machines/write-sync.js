@@ -13,13 +13,13 @@ module.exports = {
   sync: true,
 
 
-  idempotent: true,
+  sideEffects: 'idempotent',
 
 
   inputs: {
 
     string: {
-      description: 'Text to write to the file (if omitted, will create an empty file)',
+      description: 'Text to write to the file (if omitted, will create an empty file).',
       example: 'lots of words, utf8 things you know',
       defaultsTo: ''
     },
@@ -46,7 +46,7 @@ module.exports = {
     },
 
     alreadyExists: {
-      description: 'Something already exists at the specified path (overwrite by enabling the `force` input)'
+      description: 'Something already exists at the specified path (overwrite by enabling the `force` input).'
     },
 
   },

@@ -10,20 +10,20 @@ module.exports = {
   extendedDescription: 'Assumes file is encoded using utf8.',
 
 
-  idempotent: true,
+  sideEffects: 'idempotent',
 
 
   inputs: {
 
     json: {
       example: '*',
-      description: 'The data to write to disk as JSON',
+      description: 'The data to write to disk as JSON.',
       required: true
     },
 
     destination: {
       example: '/Users/mikermcneil/.tmp/bar.json',
-      description: 'Absolute path for the destination file (if relative path is provided, will resolve path from current working directory)',
+      description: 'Absolute path for the destination file (if relative path is provided, will resolve path from current working directory).',
       required: true
     },
 

@@ -10,7 +10,7 @@ module.exports = {
   extendedDescription: 'Uses Lodash template syntax (e.g. `<%= %>`, `<%- %>`, `<% %>`)  Also provides access to the Node.js core utility module (as `util`), as well as Lodash itself (as `_`).',
 
 
-  idempotent: true,
+  sideEffects: 'idempotent',
 
 
   inputs: {
@@ -22,14 +22,14 @@ module.exports = {
     },
 
     destination: {
-      description: 'The path on disk where the resulting file should be written',
+      description: 'The path on disk where the resulting file should be written.',
       example: '/Users/mikermcneil/.tmp/bar.md',
       required: true
     },
 
     data: {
       friendlyName: 'Template data',
-      description: 'The data which will be accessible from the template',
+      description: 'The data which will be accessible from the template.',
       extendedDescription: 'Each key will be a variable accessible in the template.  For instance, if you supply an array `[{name:"Chandra"}, {name:"Mary"}]` as the key "friends", then you will be able to access `friends` from the template; i.e. `<ul><% _.each(friends, function (friend){ %><li><%= friend.name %></li> <%}); %></ul>`  Use `<%= %>` to inject the contents of a variable as-is, `<%- %>` to HTML-escape them first, or `<% %>` to execute some JavaScript code.',
       example: '===',
       readOnly: true
@@ -63,12 +63,12 @@ module.exports = {
     },
 
     missingData: {
-      friendlyName: 'missing data',
       description: 'One or more variables used in the template were not provided in the template data.',
-      variableName: 'info',
-      example: {
+      outputFriendlyName: 'Missing data info',
+      outputDescription: 'Information about the missing template data.',
+      outputExample: {
         message: 'Some variables (`me`,`friends`) were used in template "/code/machine/docs/.type-table.tpl", but not provided in the template data dictionary.',
-        missingVariables: ['me', 'friends']
+        missingVariables: ['me']
       }
     },
 
@@ -77,7 +77,7 @@ module.exports = {
     },
 
     alreadyExists: {
-      description: 'Something already exists at the specified path (overwrite by enabling the `force` input)'
+      description: 'Something already exists at the specified path (overwrite by enabling the `force` input).'
     }
 
   },

@@ -10,7 +10,7 @@ module.exports = {
   extendedDescription: 'If the provided path is a directory, all contents will be removed recursively. If nothing exists at the provided path, the success exit will be triggered, but nothing will be deleted.',
 
 
-  idempotent: true,
+  sideEffects: 'idempotent',
 
 
   inputs: {

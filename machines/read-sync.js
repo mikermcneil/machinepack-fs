@@ -13,13 +13,13 @@ module.exports = {
   sync: true,
 
 
-  cacheable: true,
+  sideEffects: 'cacheable',
 
 
   inputs: {
 
     source: {
-      description: 'Absolute path to the source file (if relative path is provided, will resolve path from current working directory)',
+      description: 'Absolute path to the source file (if relative path is provided, will resolve path from current working directory).',
       example: '/Users/mikermcneil/.tmp/foo',
       required: true
     }
@@ -29,14 +29,15 @@ module.exports = {
 
   exits: {
 
-    doesNotExist: {
-      description: 'No file exists at the provided `source` path'
+    success: {
+      outputExample: 'stuff in a file!',
+      outputFriendlyName: 'File contents',
+      outputDescription: 'The contents of the file at the `source` path.'
     },
 
-    success: {
-      example: 'stuff in a file!',
-      description: 'Returns the contents of the file at `source` path'
-    }
+    doesNotExist: {
+      description: 'No file exists at the provided `source` path.'
+    },
 
   },
 

@@ -7,14 +7,14 @@ module.exports = {
   description: 'Check whether a file or directory exists at the given path.',
 
 
-  cacheable: true,
+  sideEffects: 'cacheable',
 
 
   inputs: {
 
     path: {
       example: '/Users/mikermcneil/.tmp/foo',
-      description: 'The absolute path to the file or directory',
+      description: 'The absolute path to the file or directory.',
       required: true
     }
 
@@ -23,13 +23,13 @@ module.exports = {
 
   exits: {
 
-    doesNotExist: {
-      description: 'The specified path is empty'
+    success: {
+      description: 'A file or directory exists at the specified path.'
     },
 
-    success: {
-      description: 'A file or directory exists at the specified path'
-    }
+    doesNotExist: {
+      description: 'No file or directory exists at the specified path.'
+    },
 
   },
 

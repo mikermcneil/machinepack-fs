@@ -4,10 +4,10 @@ module.exports = {
   friendlyName: 'Copy (cp)',
 
 
-  description: 'Copy file or directory located at source path to the destination path (overwriting an existing file at the destination path, if there is one).',
+  description: 'Copy file or directory located at source path to the destination path.',
 
 
-  extendedDescription: 'Includes all of its descendant files and directories (i.e. `cp -r`).',
+  extendedDescription: 'Includes all of its descendant files and directories (i.e. `cp -r`).  Any existing file at the destination path will be overwritten.',
 
 
   inputs: {
@@ -20,7 +20,8 @@ module.exports = {
 
     destination: {
       example: '/Users/mikermcneil/.tmp/bar',
-      description: 'The path (relative or absolute) to the directory in which to place the copied file(s).  When copying a single file, a target filename may be specified.',
+      description: 'The path (relative or absolute) to the directory in which to place the copied file(s).',
+      extendedDescription: 'When copying a single file, a target filename may be specified.',
       required: true
     }
 
@@ -31,10 +32,6 @@ module.exports = {
 
     doesNotExist: {
       description: 'No file or folder exists at the provided souce path.'
-    },
-
-    success: {
-      description: 'Done.'
     }
 
   },
