@@ -1,0 +1,33 @@
+{
+  "machine": "exists",
+  "expectations": [
+    {
+      "using": {
+        "path": "./"
+      },
+      "outcome": "success",
+      "returns": true
+    },
+    {
+      "using": {
+        "path": "/"
+      },
+      "outcome": "success",
+      "returns": true
+    },
+    {
+      "using": {
+        "path": "foobar"
+      },
+      "outcome": "success",
+      "returns": false
+    },
+    {
+      "using": {
+        "path": "foobar.png"
+      },
+      "outcome": "success",
+      "returns": false
+    }
+  ]
+}

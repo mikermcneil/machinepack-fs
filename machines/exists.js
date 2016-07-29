@@ -1,7 +1,7 @@
 module.exports = {
 
 
-  friendlyName: 'Exists?',
+  friendlyName: 'Does filepath exist?',
 
 
   description: 'Check whether a file or directory exists at the given path.',
@@ -14,7 +14,8 @@ module.exports = {
 
     path: {
       example: '/Users/mikermcneil/.tmp/foo',
-      description: 'The absolute path to the file or directory.',
+      description: 'The path to the file or directory to check.',
+      extendedDescription: 'If a relative path is given, it will be resolved from the current working directory.',
       required: true
     }
 
@@ -24,23 +25,26 @@ module.exports = {
   exits: {
 
     success: {
-      description: 'A file or directory exists at the specified path.'
-    },
-
-    doesNotExist: {
-      description: 'No file or directory exists at the specified path.'
+      outputFriendlyName: 'Filepath exists?',
+      outputDescription: 'Whether or not there is a file or directory at the specified path.',
+      outputExample: true
     },
 
   },
 
   fn: function (inputs, exits) {
 
+    // Import `path` and `fs-extra`.
     var Path = require('path');
     var fsx = require('fs-extra');
-
+    // Determine if the directory in question exists.
     fsx.exists(Path.resolve(process.cwd(),inputs.path), function(exists) {
-      if (!exists) {return exits.doesNotExist();}
-      return exits.success();
+
+      // If not, return `false` through the `success` exit.
+      if (!exists) {return exits.success(false);}
+
+      // Otherwise return `true` through the `success` exit.
+      return exits.success(true);
     });
   }
 
