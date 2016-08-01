@@ -38,7 +38,7 @@ module.exports = {
     },
 
     alreadyExists: {
-      description: 'Something already exists at the specified path (overwrite by enabling the `force` input).'
+      description: 'An existing file / folder was found at the specified path (overwrite by enabling the `force` input).'
     },
 
   },
@@ -59,30 +59,42 @@ module.exports = {
   //   }
   // });
   fn: function(inputs, exits) {
+
+    // Import `path`
     var path = require('path');
+
+    // Import Lodash `isFunction` and `isObject` methods.
     var isFunction = require('lodash.isfunction');
     var isObject = require('lodash.isobject');
+
+    // Import `fs-extra`.
     var fsx = require('fs-extra');
 
     // Check for the methods we need on the provided Readable source stream.
     if (!isObject(inputs.sourceStream) || !isFunction(inputs.sourceStream.pipe) || !isFunction(inputs.sourceStream.on)) {
+      // If the give `sourceStream` is invalid, leave through the `error` exit.
       return exits.error(new Error('Invalid stream provided (has no `.pipe()` and/or `.on()` methods).'));
     }
 
     // Ensure path is absolute (resolve from cwd if not).
     inputs.destination = path.resolve(inputs.destination);
 
-    // Only override an existing file if `inputs.force` is true.
+    // Check for an existing file in the specified location.
     fsx.exists(inputs.destination, function(exists) {
+
+      // If one exists, and the `force` flag is not set, leave
+      // through the `alreadyExists` exit.
       if (exists && !inputs.force) {
         return exits.alreadyExists();
       }
 
       // Delete existing files and/or directories if necessary.
       (function _deleteExistingFilesAndOrDirsIfNecessary(next) {
+        // If nothing was there, continue.
         if (!exists) {
           return next();
         }
+        // Otherwise attempt to remove the existing file / folder.
         else {
           fsx.remove(inputs.destination, next);
         }
@@ -101,27 +113,32 @@ module.exports = {
         inputs.sourceStream.pipe(writeDrain);
 
         // Handle write errors.
-        // (note that errors on the source Readable stream are the
-        //  responsibility of the provider of said stream)
+        // Note that errors on the source Readable stream are the
+        // responsibility of the provider of said stream.
+        //
+        // Declare a variable to act as a spinlock.
         var hasAlreadyCalledExit;
         writeDrain.on('error', function (err){
           // If we have not called one of our exits yet, then this is
           // our first error.  So we'll handle it by calling the
           // appropriate exit.
           if (!hasAlreadyCalledExit) {
+            // Set the spinlock and leave through the `error` exit.
             hasAlreadyCalledExit = true;
             return exits.error(err);
           }
           // Otherwise this is a subsequent error.  Since we've already
           // called an exit, there is not a whole lot else we can do.
           // So we just ignore it.
-          // (we need to keep this handler bound or an error will be
-          //  thrown, potentially crashing the process)
+          // We need to keep this handler bound or an error will be
+          // thrown, potentially crashing the process.
         });
 
         // When finished...
         writeDrain.once('finish', function (){
+          // If the spinlock is set (because we already exited) do nothing.
           if (hasAlreadyCalledExit) { return; }
+          // Otherwise set the spinlock and leave through the `success` exit.
           hasAlreadyCalledExit = true;
           return exits.success();
         });

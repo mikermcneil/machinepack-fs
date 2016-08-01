@@ -33,14 +33,19 @@ module.exports = {
   },
 
   fn: function (inputs, exits) {
+
+    // Import `path` and `fs-extra`.
     var path = require('path');
     var fsx = require('fs-extra');
 
     // Ensure absolute path.
     inputs.path = path.resolve(inputs.path);
 
+    // Attempt to remove the path and all its descendents.
     fsx.remove(inputs.path, function(err) {
+      // Return any errors through the `error` exit.
       if (err) {return exits.error(err);}
+      // If successful, return through the `success` exit.
       return exits.success();
     });
   }

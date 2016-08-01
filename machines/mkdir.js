@@ -32,40 +32,55 @@ module.exports = {
     },
 
     alreadyExists: {
-      description: 'Something already exists at the specified path (overwrite by enabling the `force` input).'
+      description: 'Something already existed at the specified path (overwrite by enabling the `force` input).'
     }
 
   },
 
 
   fn: function (inputs, exits) {
+
+    // Import `path` and `fs-extra`.
     var path = require('path');
     var fsx = require('fs-extra');
 
-
     // In case we ended up here w/ a relative path,
-    // resolve it using the process's CWD
+    // resolve it using the process's CWD.
     inputs.destination = path.resolve(inputs.destination);
 
-    // Only override an existing file if `inputs.force` is true
+    // Determine whether the destination already exists.
     fsx.exists(inputs.destination, function(exists) {
+
+      // If so, and we're `inputs.force` is not specified, return through
+      // the `alreadyExists` exit.
       if (exists && !inputs.force) {
         return exits.alreadyExists();
       }
 
       // Delete existing files and/or directories if necessary.
       (function _deleteExistingFilesAndOrDirsIfNecessary(next) {
+        // If the directory doesn't already exist, there's nothing to delete.
         if (!exists) {
           return next();
         }
+        // Otherwise remove the directory and all its contents before continuing.
         else {
           fsx.remove(inputs.destination, next);
         }
       })(function nowWriteFileToDisk(err){
-        if (err) { return exits(err); }
+        // If there was any error removing the directory, forward it to our `error` exit.
+        if (err) { return exits.error(err); }
 
         // Now create the directory on disk.
-        fsx.mkdirs(inputs.destination, exits);
+        fsx.mkdirs(inputs.destination, function(err) {
+
+          // If there was any error creating the directory, forward it to our `error` exit.
+          if (err) { return exits.error(err); }
+
+          // Return through our `success` exit.
+          return exits.success();
+
+        });
 
       });//</after deleting existing file(s)/dir(s) if necessary>
     });//</fsx.exists()>

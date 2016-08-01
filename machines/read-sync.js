@@ -36,31 +36,44 @@ module.exports = {
     },
 
     doesNotExist: {
-      description: 'No file exists at the provided `source` path.'
+      description: 'No file could be found at the provided `source` path.'
     },
+
+    isDirectory: {
+      description: 'The specified path points to a directory.'
+    }
 
   },
 
 
   fn: function (inputs, exits) {
+
+    // Import `path` and `fs`.
     var path = require('path');
     var fs = require('fs');
 
     // In case we ended up here w/ a relative path,
-    // resolve it using the process's CWD
+    // resolve it using the process's CWD.
     inputs.source = path.resolve(inputs.source);
 
+    // Declare a var to contain the contents of the file
+    // we're trying to read.
     var contents;
+
+    // Attempt to read the file contents synchronously.
     try {
       contents = fs.readFileSync(inputs.source, 'utf8');
-      // It worked!
+      // It worked!  Return the contents through the `success` exit.
       return exits.success(contents);
     }
+
+    // If there was an error...
     catch (e) {
+      // If it was a "file not found", leave through the `doesNotExist` exit.
       if (e.code === 'ENOENT') {
         return exits.doesNotExist();
       }
-      // Some unrecognized error
+      // Otherwise output the unrecognized error through the `error` exit.
       return exits.error(err);
     }
   }

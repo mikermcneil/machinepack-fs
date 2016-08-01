@@ -39,22 +39,24 @@ module.exports = {
     },
 
     doesNotExist: {
-      description: 'No file exists at the provided `source` path.'
+      description: 'No file could be found at the provided `source` path.'
     },
 
     isDirectory: {
-      description: 'A directory (not the file we were expecting) is at the source path.'
+      description: 'The specified path points to a directory.'
     },
 
   },
 
 
   fn: function (inputs,exits) {
+
+    // Import `path` and `fs`.
     var path = require('path');
     var fs = require('fs');
 
     // In case we ended up here w/ a relative path,
-    // resolve it using the process's CWD
+    // resolve it using the process's CWD.
     inputs.source = path.resolve(inputs.source);
 
     // Set up a simple flag as a local variable (`alreadyExited`) which will serve
@@ -68,7 +70,7 @@ module.exports = {
     var file__ = fs.createReadStream(inputs.source);
 
     // Bind a no-op handler for the `error` event to prevent it from crashing the process if it fires.
-    // (userland code can still bind and use its own error events)
+    // (userland code can still bind and use its own error events).
     file__.on('error', function noop (err) { });
     // ^ Since event handlers are garbage collected when the event emitter is itself gc()'d, it is safe
     // for us to bind this event handler here.
@@ -87,12 +89,14 @@ module.exports = {
         return;
       }
 
+      // If we get an ENOENT error, set the spinlock and return through the `doesNotExist` exit.
       if (err.code === 'ENOENT') {
         alreadyExited = true;
         return exits.doesNotExist();
       }
 
-      // If any other sort of miscellaneous error occurs... (as long as we haven't exited yet)
+      // If any other sort of miscellaneous error occurs, set the spinlock and forward it through
+      // the `error` exit.
       alreadyExited = true;
       return exits.error(err);
     });
@@ -106,18 +110,24 @@ module.exports = {
       // still be _OPENED_ just fine-- but the first time you try to read it... BAM. Check out @modchan's
       // SO answer at http://stackoverflow.com/a/24471971/486547 for more details & analysis.
       fs.fstat(fd, function (err, stats) {
+
+        // If the spinlock is set, do nothing.
         if (alreadyExited) {return;}
 
+        // Handle unknown errors by setting the spinlock and forwarding them through
+        // our `error` exit.
         if (err) {
           alreadyExited = true;
           return exits.error(err);
         }
 
+        // If we determined this path to be a directory, set the spinlock and call the `isDirectory` exit.
         if (stats.isDirectory()) {
           alreadyExited = true;
           return exits.isDirectory();
         }
 
+        // Otherwise set the spinlock and return the new stream through the `success` exit.
         alreadyExited = true;
         return exits.success(file__);
       }); //</fstat()>

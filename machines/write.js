@@ -40,32 +40,37 @@ module.exports = {
     },
 
     alreadyExists: {
-      description: 'Something already exists at the specified path (overwrite by enabling the `force` input).'
+      description: 'An existing file / folder was found at the specified path (overwrite by enabling the `force` input).'
     },
 
   },
 
 
   fn: function (inputs, exits) {
+
+    // Import `path` and `fs-extra`.
     var path = require('path');
     var fsx = require('fs-extra');
-
 
     // In case we ended up here w/ a relative path,
     // resolve it using the process's CWD
     inputs.destination = path.resolve(inputs.destination);
 
-    // Only override an existing file if `inputs.force` is true
+    // Check for an existing file in the specified location.
     fsx.exists(inputs.destination, function(exists) {
+      // If one exists, and the `force` flag is not set, leave
+      // through the `alreadyExists` exit.
       if (exists && !inputs.force) {
         return exits.alreadyExists();
       }
 
       // Delete existing files and/or directories if necessary.
       (function _deleteExistingFilesAndOrDirsIfNecessary(next) {
+        // If nothing was there, continue.
         if (!exists) {
           return next();
         }
+        // Otherwise attempt to remove the existing file / folder.
         else {
           fsx.remove(inputs.destination, next);
         }
@@ -73,7 +78,15 @@ module.exports = {
         if (err) { return exits(err); }
 
         // Now write the file to disk.
-        fsx.outputFile(inputs.destination, inputs.string, exits);
+        fsx.outputFile(inputs.destination, inputs.string, function(err) {
+          // If there was an error writing the file,
+          // forward it to our `error` exit.
+          if (err) { return exits.error(err); }
+
+          // Writing was successful, so leave through the `success` exit.
+          return exits.success();
+
+        });
 
       });//</after deleting existing file(s)/dir(s) if necessary>
     });//</fsx.exists()>

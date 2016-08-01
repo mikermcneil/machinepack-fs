@@ -29,13 +29,15 @@ module.exports = {
     },
 
     doesNotExist: {
-      description: 'No file or folder exists at the provided souce path.'
+      description: 'No file or folder could be found at the provided souce path.'
     }
 
   },
 
 
   fn: function(inputs, exits) {
+
+    // Import `path` and `fs-extra`.
     var path = require('path');
     var fsx = require('fs-extra');
 
@@ -43,14 +45,22 @@ module.exports = {
     inputs.source = path.resolve(inputs.source);
     inputs.destination = path.resolve(inputs.destination);
 
+    // Attempt to move the source file or folder to the destination.
     fsx.move(inputs.source, inputs.destination, function (err) {
+
+      // If the move failed...
       if (err) {
+        // If we got an ENOENT error, return out of the `doesNotExist` exit.
         if (err.code === 'ENOENT') {
           return exits.doesNotExist();
         }
+        // Otherwise return the unknown error out of our `error` exit.
         return exits.error(err);
       }
+
+      // Otherwise return through the `success` exit.
       return exits.success();
+
     });
   },
 

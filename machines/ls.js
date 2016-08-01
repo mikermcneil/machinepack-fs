@@ -69,13 +69,15 @@ module.exports = {
     },
 
     doesNotExist: {
-      description: 'Nothing exists at the specified directory path.'
+      description: 'No directory was found at the specified directory path.'
     }
 
   },
 
 
   fn: function (inputs, exits) {
+
+    // Import `path` and `walker`.
     var path = require('path');
     var Walker = require('walker');
 
@@ -89,7 +91,7 @@ module.exports = {
     // Initialize the walker and teach it to skip walking directories
     // that are:
     // • deeper than requested, or
-    // • hidden (if the `includeHidden` input is set to false)
+    // • hidden (if the `includeHidden` input is set to false).
     var walker = Walker(inputs.dir);
     walker.filterDir(function(dir, stat) {
       // Too deep
@@ -106,6 +108,8 @@ module.exports = {
     // Accumulate results array by listing file, directory, and/or symlink
     // entries from the specified directory.
     var results = [];
+
+    // If `inputs.includeFiles` is `true`, look for files.
     if (inputs.includeFiles) {
       walker.on('file', function (entry, stat) {
         // Add the new entry to our result list unless it is:
@@ -118,6 +122,8 @@ module.exports = {
         }
       });
     }
+
+    // If `inputs.includeDirs` is `true`, look for directories.
     if (inputs.includeDirs) {
       walker.on('dir', function (entry, stat) {
         // If this is the top-level directory, exclude it.
@@ -130,6 +136,8 @@ module.exports = {
         }
       });
     }
+
+    // If `inputs.includeSymlinks` is `true`, look for symbolic links.
     if (inputs.includeSymlinks) {
       walker.on('symlink', function (entry, stat) {
         // If this is the top-level directory, exclude it.
@@ -143,20 +151,31 @@ module.exports = {
       });
     }
 
-    // When walking is done, because of an error or otherwise,
-    // return the results.
+    // Declare a var to act as a spinlock, so that duplicate events can be ignored.
     var spinlock;
+
+    // If we receive an `error` event from Walker...
     walker.on('error', function (err){
+      // If the spinlock is already engaged, do nothing.
       if (spinlock) { return; }
+      // Engage the spinlock.
       spinlock = true;
+      // If the error was ENOENT, it means the requested directory does not exist,
+      // so we'll return through the `doesNotExist` exit.
       if (err.code === 'ENOENT') {
         return exits.doesNotExist();
       }
+      // Otherwise forward the unknown error through the `error` exit.
       return exits.error(err);
     });
+
+    // If we receive a `done` event from Walker...
     walker.on('end', function (){
+      // If the spinlock is already engaged, do nothing.
       if (spinlock) { return; }
+      // Engage the spinlock.
       spinlock = true;
+      // Return the accumulated directory contents through the `success` exit.
       return exits.success(results);
     });
   }

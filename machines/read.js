@@ -33,31 +33,50 @@ module.exports = {
     },
 
     doesNotExist: {
-      description: 'No file exists at the provided `source` path.'
+      description: 'No file could be found at the provided `source` path.'
     },
+
+    isDirectory: {
+      description: 'The specified path points to a directory.'
+    }
 
   },
 
 
   fn: function (inputs, exits) {
+
+    // Import `path` and `fs`.
     var path = require('path');
     var fs = require('fs');
 
     // In case we ended up here w/ a relative path,
-    // resolve it using the process's CWD
+    // resolve it using the process's CWD.
     inputs.source = path.resolve(inputs.source);
 
+    // Attempt to read the file at the specified path.
     fs.readFile(inputs.source, 'utf8', function (err, contents) {
-      // It worked!
+
+      // It worked!  Return the file contents through the `success` exit.
       if (!err) {
         return exits.success(contents);
       }
-      // No need for `null` check here because we already know `err` is falsy
-      if (typeof err === 'object' && err.code === 'ENOENT') {
+
+      // If we got an ENOENT error, it means the file does not exits, so we'll
+      // leave through the `doesNotExist` exit.
+      if (err.code === 'ENOENT') {
         return exits.doesNotExist();
       }
-      // Some unrecognized error
+
+      // If we got an EISDIR error, it means the path points to a directory, so
+      // we'll leave through the `isDirectory` exit.
+      if (err.code === 'EISDIR') {
+        return exits.isDirectory();
+      }
+
+      // Some unrecognized error occurred, so we'll just forward it through
+      // our `error` exit.
       return exits.error(err);
+
     });
   }
 };

@@ -43,35 +43,47 @@ module.exports = {
     },
 
     doesNotExist: {
-      description: 'No file exists at the provided `source` path.'
+      description: 'No file could be found at the provided `source` path.'
     },
 
     couldNotParse: {
-      description: 'Could not parse file as JSON.'
+      description: 'Could not parse the file as JSON.'
     },
 
-    // TODO: not a file (and return what it ACTUALLY is, e.g. dir or symlink)
+    isDirectory: {
+      description: 'The specified path points to a directory.'
+    }
 
   },
 
 
   fn: function (inputs, exits) {
 
-    var MPJSON = require('machinepack-json');
-    var thisPack = require('../');
+    // Import `machinepack-json`.
+    var Json = require('machinepack-json');
 
-    thisPack.read({
+    // Import this pack.
+    var Filesystem = require('../');
+
+    // Attempt to read the file at the specified path.
+    Filesystem.read({
       source: inputs.source
     }).exec({
+      // Forward errors through the appropriate exits.
       error: exits.error,
       doesNotExist: exits.doesNotExist,
+      isDirectory: exits.isDirectory,
+      // If the file was successfully read...
       success: function (contents){
-        MPJSON.parse({
+        // Attempt to parse the file contents as JSON.
+        Json.parse({
           json: contents,
           schema: inputs.schema
         }).exec({
+          // Forward errors through the appropriate exits.
           error: exits.error,
           couldNotParse: exits.couldNotParse,
+          // If the data was successfully parsed, push it through our `success` exit.
           success: function (parsedData){
             return exits.success(parsedData);
           }

@@ -59,7 +59,7 @@ module.exports = {
     },
 
     noTemplate: {
-      description: 'Source template file not found.'
+      description: 'The source template file could not be found.'
     },
 
     missingData: {
@@ -77,38 +77,57 @@ module.exports = {
     },
 
     alreadyExists: {
-      description: 'Something already exists at the specified path (overwrite by enabling the `force` input).'
+      description: 'An existing file was found at the specified path (overwrite by enabling the `force` input).'
     }
 
   },
 
 
   fn: function (inputs, exits) {
-    var thisPack = require('../');
-    var MPStrings = require('machinepack-strings');
 
-    // Read template from disk
-    thisPack.read({
+    // Import `machinepack-strings`.
+    var Strings = require('machinepack-strings');
+
+    // Get a handle to this pack.
+    var Filesystem = require('../');
+
+    // Read template from disk.
+    Filesystem.read({
       source: inputs.source
     }).exec({
-      error: exits.error,
+      // If the template could not be found, exit through the `doesNotExist` exit.
       doesNotExist: exits.noTemplate,
+      // If an unknown error occurred trying to read the template file, exit through
+      // the `error` exit.
+      error: exits.error,
+      // If the template was read successfully...
       success: function (templateStr) {
-        MPStrings.template({
+        // Use the `Strings.template` machine to replace tokens in the template
+        // with input data.
+        Strings.template({
           templateStr: templateStr,
           data: inputs.data
         }).exec({
-          error: exits.error,
+          // If the template contained tokens that were missing from the `inputs.data`
+          // dictionary, leave through the `missingData` exit.
           missingData: exits.missingData,
+          // If another rendering error occurred, leave through the `couldNotRender` exit.
           couldNotRender: exits.couldNotRender,
+          // If an unknown error occurred, leave through the `error` exit.
+          error: exits.error,
           success: function (renderedStr) {
-            thisPack.write({
+            // Now attempt to write the rendered template to disk.
+            Filesystem.write({
               destination: inputs.destination,
               string: renderedStr,
               force: inputs.force
             }).exec({
-              error: exits.error,
+              // If a file was found at the destination and `inputs.force` was not set,
+              // leave through the `alreadyExists` exit.
               alreadyExists: exits.alreadyExists,
+              // If an unknown error occurred, leave through the `error` exit.
+              error: exits.error,
+              // The file write was successful, so leave through the `success` exit.
               success: exits.success
             });
           }

@@ -46,22 +46,28 @@ module.exports = {
     },
 
     alreadyExists: {
-      description: 'Something already exists at the specified path (overwrite by enabling the `force` input).'
+      description: 'An existing file / folder was found at the specified path (overwrite by enabling the `force` input).'
     },
 
   },
 
 
   fn: function (inputs, exits) {
+
+    // Import `path`.
     var path = require('path');
+
+    // Import `fs` and `fs-extra`.
     var fs = require('fs');
     var fsx = require('fs-extra');
 
     // In case we ended up here w/ a relative path,
-    // resolve it using the process's CWD
+    // resolve it using the process's CWD.
     inputs.destination = path.resolve(inputs.destination);
 
-    // Only override an existing file if `inputs.force` is true
+    // Only override an existing file if `inputs.force` is true.
+    // Any errors thrown will automatically be caught and forwarded
+    // through our `error` exit.
     if (inputs.force) {
       fsx.outputFileSync(inputs.destination, inputs.string);
       return exits.success();
@@ -74,7 +80,13 @@ module.exports = {
       // See `https://nodejs.org/api/fs.html#fs_fs_exists_path_callback`
       return exits.alreadyExists();
     }
+
+    // Attempt to write the file to disc.
+    // Any errors thrown will automatically be caught and forwarded
+    // through our `error` exit.
     fs.writeFileSync(inputs.destination, inputs.string);
+
+    // Return through the `success` exit.
     return exits.success();
 
   }

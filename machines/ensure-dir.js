@@ -32,16 +32,25 @@ module.exports = {
 
 
   fn: function(inputs, exits) {
+
+    // Import `path` and `fs-extra`.
     var path = require('path');
     var fsx = require('fs-extra');
 
     // In case we ended up w/ a relative path, make it absolute.
     inputs.path = path.resolve(inputs.path);
 
+    // Attempt to ensure the directory.
     fsx.ensureDir(inputs.path, function(err) {
+
+      // Forward any errors through our `error` exit.
       if (err) {return exits.error(err);}
+
+      // Otherwise return through the `success` exit.
       return exits.success();
+
     });
+
   }
 
 

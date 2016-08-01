@@ -31,22 +31,31 @@ module.exports = {
   exits: {
 
     doesNotExist: {
-      description: 'No file or folder exists at the provided souce path.'
+      description: 'No file or folder could be found at the provided source path.'
     }
 
   },
 
   fn: function (inputs, exits) {
+
+    // Import `path` and `fs-extra`.
     var path = require('path');
     var fsx = require('fs-extra');
 
+    // Attempt to copy the source file or directory to the destination.
     fsx.copy(path.resolve(inputs.source), path.resolve(inputs.destination), function (err) {
+
+      // If the copy failed...
       if (err) {
+        // If we got an ENOENT error, return out of the `doesNotExist` exit.
         if (err.code === 'ENOENT') {
           return exits.doesNotExist();
         }
+        // Otherwise return the unknown error out of our `error` exit.
         return exits.error(err);
       }
+
+      // Otherwise return through the `success` exit.
       return exits.success();
     });
   }
