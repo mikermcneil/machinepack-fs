@@ -70,6 +70,9 @@ module.exports = {
     // Import `fs-extra`.
     var fsx = require('fs-extra');
 
+    // Import this pack
+    var Filesystem = require('../');
+
     // Check for the methods we need on the provided Readable source stream.
     if (!isObject(inputs.sourceStream) || !isFunction(inputs.sourceStream.pipe) || !isFunction(inputs.sourceStream.on)) {
       // If the give `sourceStream` is invalid, leave through the `error` exit.
@@ -79,8 +82,12 @@ module.exports = {
     // Ensure path is absolute (resolve from cwd if not).
     inputs.destination = path.resolve(inputs.destination);
 
-    // Check for an existing file in the specified location.
-    fsx.exists(inputs.destination, function(exists) {
+    // Determine whether the destination already exists.
+    Filesystem.exists({path: inputs.destination}).exec(function(err, exists) {
+
+      // If an error occurred checking for file existence, forward it through
+      // our `error` exit.
+      if (err) {return exits.error(err);}
 
       // If one exists, and the `force` flag is not set, leave
       // through the `alreadyExists` exit.
@@ -143,7 +150,7 @@ module.exports = {
           return exits.success();
         });
       });//</after _deleteExistingFilesAndOrDirsIfNecessary>
-    });//</fsx.exists()>
+    });//</Filesystem.exists()>
   },
 
 

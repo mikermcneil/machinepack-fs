@@ -55,13 +55,20 @@ module.exports = {
     var path = require('path');
     var fsx = require('fs-extra');
 
+    // Import this pack
+    var Filesystem = require('../');
 
     // In case we ended up here w/ a relative path,
     // resolve it using the process's CWD.
     inputs.destination = path.resolve(inputs.destination);
 
-    // Check for an existing file in the specified location.
-    fsx.exists(inputs.destination, function(exists) {
+    // Determine whether the destination already exists.
+    Filesystem.exists({path: inputs.destination}).exec(function(err, exists) {
+
+      // If an error occurred checking for file existence, forward it through
+      // our `error` exit.
+      if (err) {return exits.error(err);}
+
       // If one exists, and the `force` flag is not set, leave
       // through the `alreadyExists` exit.
       if (exists && !inputs.force) {
@@ -95,7 +102,7 @@ module.exports = {
         });
 
       });//</after deleting existing file(s)/dir(s) if necessary>
-    });//</fsx.exists()>
+    });//</Filesystem.exists()>
   }
 
 

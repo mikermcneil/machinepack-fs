@@ -74,11 +74,15 @@ module.exports = {
     }
 
     // Otherwise don't override existing files.
-    if (fs.existsSync(inputs.destination)) {
-      // TODO: Some time before fs.existsSync() is deprecated in
-      // Node core, switch this to use a different strategy.
-      // See `https://nodejs.org/api/fs.html#fs_fs_exists_path_callback`
+    try {
+      // Try to `stat` the destination.
+      fs.statSync(inputs.destination);
+      // If we can do so without error, it means the file already
+      // exists, so call our `alreadyExists` exit.
       return exits.alreadyExists();
+    }
+    catch (e) {
+      // Otherwise we're okay, so continue.
     }
 
     // Attempt to write the file to disc.
