@@ -48,7 +48,6 @@
       "mv",
       "mkdir",
       "ensure-dir",
-      "ensure-json",
       "write-sync",
       "read-sync",
       "read-stream",
