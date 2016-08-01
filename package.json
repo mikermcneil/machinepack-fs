@@ -3,7 +3,7 @@
   "version": "8.0.2",
   "description": "Work with the local filesystem; list files, write files, etc.",
   "scripts": {
-    "test": "node ./node_modules/test-machinepack-mocha/bin/testmachinepack-mocha.js"
+    "test": "mocha tests/** -R spec"
   },
   "keywords": [
     "machines",
@@ -13,7 +13,7 @@
   "author": "Mike McNeil",
   "license": "MIT",
   "dependencies": {
-    "fs-extra": "0.26.5",
+    "fs-extra": "0.30.0",
     "lodash.isfunction": "3.0.8",
     "lodash.isobject": "3.0.2",
     "machine": "^12.3.0",
@@ -24,6 +24,7 @@
     "walker": "1.0.7"
   },
   "devDependencies": {
+    "lodash": "^3.10.1",
     "mocha": "~1.19.0",
     "test-machinepack-mocha": "^2.1.3"
   },
