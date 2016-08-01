@@ -37,11 +37,22 @@ module.exports = {
     // Import `path` and `fs-extra`.
     var Path = require('path');
     var fsx = require('fs-extra');
-    // Determine if the directory in question exists.
-    fsx.exists(Path.resolve(process.cwd(),inputs.path), function(exists) {
 
-      // If not, return `false` through the `success` exit.
-      if (!exists) {return exits.success(false);}
+    // Determine if the directory in question exists.
+    // Use `stat` instead of the deprecated `exists`.
+    fsx.stat(Path.resolve(process.cwd(),inputs.path), function(err) {
+
+      // If an ENOENT error is returned, the file doesn't exist,
+      // so we can return `false` through the `success` exit.
+      if (err && err.code === 'ENOENT') {
+        return exits.success(false);
+      }
+
+      // If some other error is returned, just forward it through
+      // our `error` exit.
+      if (err) {
+        return exits.error(err);
+      }
 
       // Otherwise return `true` through the `success` exit.
       return exits.success(true);
