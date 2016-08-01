@@ -103,7 +103,7 @@ module.exports = {
 
         // Build the write drain (i.e. "write stream").
         // This is where the content will go.
-        var writeDrain = fsx.createOutputStream(inputs.destination);
+        var writeDrain = fsx.createWriteStream(inputs.destination);
 
         // Pipe the source stream down the drain.
         //

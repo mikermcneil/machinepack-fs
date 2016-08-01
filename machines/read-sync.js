@@ -73,8 +73,13 @@ module.exports = {
       if (e.code === 'ENOENT') {
         return exits.doesNotExist();
       }
+      // If we got an EISDIR error, it means the path points to a directory, so
+      // we'll leave through the `isDirectory` exit.
+      if (e.code === 'EISDIR') {
+        return exits.isDirectory();
+      }
       // Otherwise output the unrecognized error through the `error` exit.
-      return exits.error(err);
+      return exits.error(e);
     }
   }
 
