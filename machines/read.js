@@ -37,7 +37,7 @@ module.exports = {
     },
 
     isDirectory: {
-      description: 'The specified path points to a directory.'
+      description: 'The specified path pointed to a directory.'
     }
 
   },

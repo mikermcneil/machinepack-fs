@@ -7,6 +7,9 @@ module.exports = {
   description: 'Make a new directory.',
 
 
+  sideEffects: 'idempotent',
+
+
   inputs: {
 
     destination: {
@@ -44,7 +47,7 @@ module.exports = {
     var path = require('path');
     var fsx = require('fs-extra');
 
-    // Import this pack
+    // Import this pack.
     var Filesystem = require('../');
 
     // In case we ended up here w/ a relative path,

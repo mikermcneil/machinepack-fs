@@ -25,7 +25,7 @@ module.exports = {
   exits: {
 
     success: {
-      description: 'Either a directory already existed, or it was just created, at the specified path.'
+      description: 'Either a directory already existed, or was just created, at the specified path.'
     }
 
   },

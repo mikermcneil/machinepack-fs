@@ -94,11 +94,11 @@ module.exports = {
     // • hidden (if the `includeHidden` input is set to false).
     var walker = Walker(inputs.dir);
     walker.filterDir(function(dir, stat) {
-      // Too deep
+      // Too deep.
       if (dir.split(path.sep).length > (topLvlDirDepth + inputs.depth)) {
         return false;
       }
-      // Too hidden
+      // Too hidden.
       if (path.basename(dir).match(/^\./) && !inputs.includeHidden) {
         return false;
       }
