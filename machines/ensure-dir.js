@@ -7,7 +7,7 @@ module.exports = {
   description: 'Ensure that the directory exists. If the directory structure does not exist, it is created.',
 
 
-  sideEffects: 'idempotent',
+  sideEffects: 'cacheable',
 
 
   inputs: {

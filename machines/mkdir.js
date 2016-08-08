@@ -7,9 +7,6 @@ module.exports = {
   description: 'Make a new directory.',
 
 
-  sideEffects: 'idempotent',
-
-
   inputs: {
 
     destination: {

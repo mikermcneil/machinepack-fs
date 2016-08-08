@@ -10,7 +10,7 @@ module.exports = {
   extendedDescription: 'Uses Lodash template syntax (e.g. `<%= %>`, `<%- %>`, `<% %>`)  Also provides access to the Node.js core utility module (as `util`), as well as Lodash itself (as `_`).',
 
 
-  sideEffects: 'idempotent',
+  sideEffects: 'cacheable',
 
 
   inputs: {
