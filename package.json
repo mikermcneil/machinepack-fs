@@ -16,7 +16,7 @@
     "fs-extra": "0.30.0",
     "lodash.isfunction": "3.0.8",
     "lodash.isobject": "3.0.2",
-    "machine": "^12.3.0",
+    "machine": "^13.0.0-11",
     "machinepack-json": "~2.0.0",
     "machinepack-strings": "~5.0.0",
     "machinepack-util": "~6.0.0",
