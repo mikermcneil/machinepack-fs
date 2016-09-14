@@ -51,7 +51,8 @@
       "write-sync",
       "read-sync",
       "read-stream",
-      "write-stream"
+      "write-stream",
+      "rmrf-sync"
     ],
     "testsUrl": "https://travis-ci.org/mikermcneil/machinepack-fs"
   }
