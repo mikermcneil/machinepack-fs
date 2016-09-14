@@ -1,7 +1,7 @@
 module.exports = {
 
 
-  friendlyName: 'Remove (sync)',
+  friendlyName: 'Remove (rm) (sync)',
 
 
   description: 'Completely remove a file or directory (like rm -rf).',
