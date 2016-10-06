@@ -22,6 +22,7 @@ module.exports = {
     },
 
     schema: {
+      friendlyName: 'Example result',
       description: 'An example schema (in RTTC exemplar syntax) describing what the parsed data should look like (used for type-coercion).',
       moreInfoUrl: 'https://github.com/node-machine/rttc#types--terminology',
       defaultsTo: '*',
