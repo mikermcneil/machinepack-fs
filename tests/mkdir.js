@@ -24,7 +24,7 @@ describe('machinepack-fs :: mkdir', function() {
       success: function() {
         return done('Expected to return through `alreadyExists` exit, but triggered `success` instead!');
       },
-      alreadyExists: done
+      alreadyExists: function() {return done();}
     });
 
   });
