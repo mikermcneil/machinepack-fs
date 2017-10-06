@@ -21,7 +21,7 @@ describe('machinepack-fs :: readSync', function() {
   it('should trigger its `doesNotExist` exit when called for a non-existent file', function() {
 
     try {
-      var contents = Filesystem.readSync({
+      Filesystem.readSync({
         source: path.resolve(__dirname, 'fixtures', 'files', 'helloxxx.txt')
       }).execSync();
       throw new Error('Should have triggered `doesNotExist` exit, instead triggered `success`!');

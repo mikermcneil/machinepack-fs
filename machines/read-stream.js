@@ -71,7 +71,7 @@ module.exports = {
 
     // Bind a no-op handler for the `error` event to prevent it from crashing the process if it fires.
     // (userland code can still bind and use its own error events).
-    file__.on('error', function noop (err) { });
+    file__.on('error', function noop (err) { });//eslint-disable-line handle-callback-err, no-unused-vars
     // ^ Since event handlers are garbage collected when the event emitter is itself gc()'d, it is safe
     // for us to bind this event handler here.
 

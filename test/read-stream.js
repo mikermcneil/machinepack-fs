@@ -20,6 +20,9 @@ describe('machinepack-fs :: read-stream', function() {
       },
       success: function(stream) {
         var contents = stream.read();
+        var contents2 = stream.read();
+        var contents3 = stream.read();
+        console.log('!!',stream, contents, contents2, contents3);
         assert.equal(contents, 'hello wurld!');
         return done();
       }
