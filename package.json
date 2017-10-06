@@ -5,7 +5,7 @@
   "scripts": {
     "custom-tests": "mocha test/** -R spec",
     "lint": "node ./node_modules/eslint/bin/eslint . --max-warnings=0",
-    "test": "npm run lint && npm run custom-tests"
+    "test": "npm run custom-tests && npm run lint"
   },
   "keywords": [
     "machines",
