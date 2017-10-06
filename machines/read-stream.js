@@ -95,6 +95,12 @@ module.exports = {
         return exits.doesNotExist();
       }
 
+      // If we get an EISDIR error, set the spinlock and return through the `isDirectory` exit.
+      if (err.code === 'EISDIR') {
+        alreadyExited = true;
+        return exits.isDirectory();
+      }
+
       // If any other sort of miscellaneous error occurs, set the spinlock and forward it through
       // the `error` exit.
       alreadyExited = true;
