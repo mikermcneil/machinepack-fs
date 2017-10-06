@@ -24,7 +24,7 @@ describe('machinepack-fs :: ls', function() {
     Filesystem.ls({
       dir: path.resolve(__dirname, 'fixtures', 'sandbox'),
       depth: 1
-    }).exec({
+    }).switch({
       error: done,
       success: function(files) {
         var expectedFiles = [ 'alicemoji.png', 'hello.txt', 'some-folder', 'a-ball.jpg' ];
@@ -44,7 +44,7 @@ describe('machinepack-fs :: ls', function() {
       dir: path.resolve(__dirname, 'fixtures', 'sandbox'),
       depth: 1,
       includeHidden: true
-    }).exec({
+    }).switch({
       error: done,
       success: function(files) {
         var expectedFiles = [ 'alicemoji.png', 'hello.txt', 'some-folder', 'a-ball.jpg', '.hiddenfile' ];
@@ -64,7 +64,7 @@ describe('machinepack-fs :: ls', function() {
       dir: path.resolve(__dirname, 'fixtures', 'sandbox'),
       depth: 1,
       includeDirs: false
-    }).exec({
+    }).switch({
       error: done,
       success: function(files) {
         var expectedFiles = [ 'alicemoji.png', 'hello.txt', 'a-ball.jpg' ];
@@ -84,7 +84,7 @@ describe('machinepack-fs :: ls', function() {
       dir: path.resolve(__dirname, 'fixtures', 'sandbox'),
       depth: 1,
       includeSymlinks: false
-    }).exec({
+    }).switch({
       error: done,
       success: function(files) {
         var expectedFiles = [ 'alicemoji.png', 'hello.txt', 'some-folder' ];
@@ -103,7 +103,7 @@ describe('machinepack-fs :: ls', function() {
     Filesystem.ls({
       dir: path.resolve(__dirname, 'fixtures', 'sandbox'),
       depth: 2
-    }).exec({
+    }).switch({
       error: done,
       success: function(files) {
         var expectedFiles = [ 'alicemoji.png', 'hello.txt', 'a-ball.jpg', 'some-folder', 'some-folder/aliceball.jpg'];

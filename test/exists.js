@@ -9,7 +9,7 @@ describe('machinepack-fs :: exists', function() {
 
     Filesystem.exists({
       path: path.resolve(__dirname, 'fixtures', 'files')
-    }).exec({
+    }).switch({
       error: done,
       success: function(exists) {
         assert.equal(exists, true);
@@ -23,7 +23,7 @@ describe('machinepack-fs :: exists', function() {
 
     Filesystem.exists({
       path: path.resolve(__dirname, 'fixtures', 'files', 'alicemoji.png')
-    }).exec({
+    }).switch({
       error: done,
       success: function(exists) {
         assert.equal(exists, true);
@@ -37,7 +37,7 @@ describe('machinepack-fs :: exists', function() {
 
     Filesystem.exists({
       path: path.resolve(__dirname, 'fixtures', 'filesxxx')
-    }).exec({
+    }).switch({
       error: done,
       success: function(exists) {
         assert.equal(exists, false);
@@ -51,7 +51,7 @@ describe('machinepack-fs :: exists', function() {
 
     Filesystem.exists({
       path: path.resolve(__dirname, 'fixtures', 'files', 'alicemojixxx.png')
-    }).exec({
+    }).switch({
       error: done,
       success: function(exists) {
         assert.equal(exists, false);

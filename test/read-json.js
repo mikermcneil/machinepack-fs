@@ -19,7 +19,7 @@ describe('machinepack-fs :: read-json', function() {
         },
         array: [99]
       }
-    }).exec({
+    }).switch({
       error: done,
       doesNotExist: function() {
         return done('Expected to return through `success` exit, but triggered `doesNotExist` instead!');
@@ -58,7 +58,7 @@ describe('machinepack-fs :: read-json', function() {
         },
         array: [99]
       }
-    }).exec({
+    }).switch({
       error: done,
       doesNotExist: function() {
         return done();
@@ -87,7 +87,7 @@ describe('machinepack-fs :: read-json', function() {
         },
         array: [99]
       }
-    }).exec({
+    }).switch({
       error: done,
       doesNotExist: function() {
         return done('Expected to return through `couldNotParse` exit, but triggered `couldNotParse` instead!');
@@ -116,7 +116,7 @@ describe('machinepack-fs :: read-json', function() {
         },
         array: [99]
       }
-    }).exec({
+    }).switch({
       error: done,
       doesNotExist: function() {
         return done('Expected to return through `isDirectory` exit, but triggered `doesNotExist` instead!');

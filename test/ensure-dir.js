@@ -21,7 +21,7 @@ describe('machinepack-fs :: ensureDir', function() {
 
     Filesystem.ensureDir({
       path: path.resolve(__dirname, 'fixtures', 'sandbox')
-    }).exec({
+    }).switch({
       error: done,
       success: function() {
         // Verify that the folder was created

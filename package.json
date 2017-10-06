@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "@sailshq/lodash": "^3.10.2",
+    "eslint": "3.19.0",
     "mocha": "3.0.2",
     "test-machinepack-mocha": "^2.1.3"
   },

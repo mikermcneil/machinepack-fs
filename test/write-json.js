@@ -26,7 +26,7 @@ describe('machinepack-fs :: write-json', function() {
         },
         array: [1, 2, 3]
       }
-    }).exec({
+    }).switch({
       error: done,
       success: function() {
         return done('Expected to return through `alreadyExists` exit, but triggered `success` instead!');
@@ -50,7 +50,7 @@ describe('machinepack-fs :: write-json', function() {
         array: [1, 2, 3]
       },
       force: true
-    }).exec({
+    }).switch({
       error: done,
       success: function() {
         var contents = JSON.parse(fsx.readFileSync(path.resolve(__dirname, 'fixtures', 'sandbox', 'foo.txt'), 'utf8'));
@@ -83,7 +83,7 @@ describe('machinepack-fs :: write-json', function() {
         },
         array: [1, 2, 3]
       }
-    }).exec({
+    }).switch({
       error: done,
       success: function() {
         var contents = JSON.parse(fsx.readFileSync(path.resolve(__dirname, 'fixtures', 'sandbox', 'bar.txt'), 'utf8'));

@@ -68,7 +68,7 @@ module.exports = {
     // Attempt to read the file at the specified path.
     Filesystem.read({
       source: inputs.source
-    }).exec({
+    }).switch({
       // Forward errors through the appropriate exits.
       error: exits.error,
       doesNotExist: exits.doesNotExist,

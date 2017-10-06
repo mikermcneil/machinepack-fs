@@ -24,7 +24,7 @@ describe('machinepack-fs :: template', function() {
           firstName: 'Jane',
           lastName: 'Doe'
         }
-      }).exec({
+      }).switch({
         error: done,
         success: function() {
           return done('Expected to return through `alreadyExists` exit, but triggered `success` instead!');
@@ -53,7 +53,7 @@ describe('machinepack-fs :: template', function() {
           lastName: 'Doe'
         },
         force: true
-      }).exec({
+      }).switch({
         error: done,
         success: function() {
           var contents = fsx.readFileSync(path.resolve(__dirname, 'fixtures', 'sandbox', 'foo.txt'), 'utf8');
@@ -83,7 +83,7 @@ describe('machinepack-fs :: template', function() {
           firstName: 'Jane',
           lastName: 'Doe'
         }
-      }).exec({
+      }).switch({
         error: done,
         success: function() {
           var contents = fsx.readFileSync(path.resolve(__dirname, 'fixtures', 'sandbox', 'bar.txt'), 'utf8');
@@ -114,7 +114,7 @@ describe('machinepack-fs :: template', function() {
       data: {
         firstName: 'Jane'
       }
-    }).exec({
+    }).switch({
       error: done,
       success: function() {
         return done('Expected to return through `missingData` exit, but triggered `success` instead!');
@@ -142,7 +142,7 @@ describe('machinepack-fs :: template', function() {
         firstName: 'Jane',
         lastName: 'Doe'
       }
-    }).exec({
+    }).switch({
       error: done,
       success: function() {
         return done('Expected to return through `couldNotRender` exit, but triggered `success` instead!');
@@ -170,7 +170,7 @@ describe('machinepack-fs :: template', function() {
         firstName: 'Jane',
         lastName: 'Doe'
       }
-    }).exec({
+    }).switch({
       error: done,
       success: function() {
         return done('Expected to return through `noTemplate` exit, but triggered `success` instead!');

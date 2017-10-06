@@ -19,7 +19,7 @@ describe('machinepack-fs :: mkdir', function() {
 
     Filesystem.mkdir({
       destination: path.resolve(__dirname, 'fixtures', 'sandbox')
-    }).exec({
+    }).switch({
       error: done,
       success: function() {
         return done('Expected to return through `alreadyExists` exit, but triggered `success` instead!');
@@ -34,7 +34,7 @@ describe('machinepack-fs :: mkdir', function() {
     Filesystem.mkdir({
       destination: path.resolve(__dirname, 'fixtures', 'sandbox'),
       force: true
-    }).exec({
+    }).switch({
       error: done,
       alreadyExists: function() {
         return done('Expected to return through `success` exit, but triggered `alreadyExists` instead!');
@@ -61,7 +61,7 @@ describe('machinepack-fs :: mkdir', function() {
     Filesystem.mkdir({
       destination: path.resolve(__dirname, 'fixtures', 'sandbox-2'),
       force: true
-    }).exec({
+    }).switch({
       error: done,
       alreadyExists: function() {
         return done('Expected to return through `success` exit, but triggered `alreadyExists` instead!');

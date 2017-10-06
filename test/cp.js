@@ -14,7 +14,7 @@ describe('machinepack-fs :: cp', function() {
     Filesystem.cp({
       source: path.resolve(__dirname, 'fixtures', 'files', 'alicemoji.png'),
       destination: path.resolve(__dirname, 'fixtures', 'sandbox', 'alicemoji.png'),
-    }).exec({
+    }).switch({
       error: done,
       doesNotExist: done,
       success: function() {
@@ -35,7 +35,7 @@ describe('machinepack-fs :: cp', function() {
     Filesystem.cp({
       source: path.resolve(__dirname, 'fixtures', 'files', 'alicemoji.png'),
       destination: path.resolve(__dirname, 'fixtures', 'sandbox', 'alicemoji_2.png'),
-    }).exec({
+    }).switch({
       error: done,
       doesNotExist: done,
       success: function() {
@@ -56,7 +56,7 @@ describe('machinepack-fs :: cp', function() {
     Filesystem.cp({
       source: path.resolve(__dirname, 'fixtures', 'files'),
       destination: path.resolve(__dirname, 'fixtures', 'sandbox'),
-    }).exec({
+    }).switch({
       error: done,
       doesNotExist: done,
       success: function() {
@@ -81,7 +81,7 @@ describe('machinepack-fs :: cp', function() {
     Filesystem.cp({
       source: path.resolve(__dirname, 'fixtures', 'files', 'alicemojixxx.png'),
       destination: path.resolve(__dirname, 'fixtures', 'sandbox', 'alicemojixxxx.png'),
-    }).exec({
+    }).switch({
       doesNotExist: function() {return done();},
       error: done,
       success: function() {return done('Triggered `success` but should have been `doesNotExist!`');}

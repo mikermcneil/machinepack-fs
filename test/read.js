@@ -10,7 +10,7 @@ describe('machinepack-fs :: read', function() {
 
     Filesystem.read({
       source: path.resolve(__dirname, 'fixtures', 'files', 'hello.txt')
-    }).exec({
+    }).switch({
       error: done,
       doesNotExist: function() {
         return done('Expected to return through `success` exit, but triggered `doesNotExist` instead!');
@@ -30,7 +30,7 @@ describe('machinepack-fs :: read', function() {
 
     Filesystem.read({
       source: path.resolve(__dirname, 'fixtures', 'files', 'helloxxx.txt')
-    }).exec({
+    }).switch({
       error: done,
       doesNotExist: function() {
         return done();
@@ -49,7 +49,7 @@ describe('machinepack-fs :: read', function() {
 
     Filesystem.read({
       source: path.resolve(__dirname, 'fixtures', 'files')
-    }).exec({
+    }).switch({
       error: done,
       doesNotExist: function() {
         return done('Expected to return through `isDirectory` exit, but triggered `isDirectory` instead!');

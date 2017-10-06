@@ -19,7 +19,7 @@ describe('machinepack-fs :: writeStream', function() {
     Filesystem.writeStream({
       sourceStream: stream,
       destination: path.resolve(__dirname, 'fixtures', 'sandbox', 'foo.txt'),
-    }).exec({
+    }).switch({
       error: done,
       success: function() {
         return done('Expected to return through `alreadyExists` exit, but triggered `success` instead!');
@@ -36,7 +36,7 @@ describe('machinepack-fs :: writeStream', function() {
       sourceStream: stream,
       destination: path.resolve(__dirname, 'fixtures', 'sandbox', 'foo.txt'),
       force: true
-    }).exec({
+    }).switch({
       error: done,
       success: function() {
         var contents = fsx.readFileSync(path.resolve(__dirname, 'fixtures', 'sandbox', 'foo.txt'), 'utf8');
@@ -54,7 +54,7 @@ describe('machinepack-fs :: writeStream', function() {
     Filesystem.writeStream({
       sourceStream: stream,
       destination: path.resolve(__dirname, 'fixtures', 'sandbox', 'bar.txt'),
-    }).exec({
+    }).switch({
       error: done,
       success: function() {
         var contents = fsx.readFileSync(path.resolve(__dirname, 'fixtures', 'sandbox', 'bar.txt'), 'utf8');

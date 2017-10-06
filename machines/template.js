@@ -94,7 +94,7 @@ module.exports = {
     // Read template from disk.
     Filesystem.read({
       source: inputs.source
-    }).exec({
+    }).switch({
       // If the template could not be found, exit through the `doesNotExist` exit.
       doesNotExist: exits.noTemplate,
       // If an unknown error occurred trying to read the template file, exit through
@@ -121,7 +121,7 @@ module.exports = {
               destination: inputs.destination,
               string: renderedStr,
               force: inputs.force
-            }).exec({
+            }).switch({
               // If a file was found at the destination and `inputs.force` was not set,
               // leave through the `alreadyExists` exit.
               alreadyExists: exits.alreadyExists,

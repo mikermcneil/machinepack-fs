@@ -19,7 +19,7 @@ describe('machinepack-fs :: mv', function() {
     Filesystem.cp({
       source: path.resolve(__dirname, 'fixtures', 'sandbox', 'alicemoji.png'),
       destination: path.resolve(__dirname, 'fixtures', 'sandbox', 'some-folder', 'alicemoji.png'),
-    }).exec({
+    }).switch({
       error: done,
       doesNotExist: done,
       success: function() {
@@ -40,7 +40,7 @@ describe('machinepack-fs :: mv', function() {
     Filesystem.cp({
       source: path.resolve(__dirname, 'fixtures', 'files', 'hello.txt'),
       destination: path.resolve(__dirname, 'fixtures', 'sandbox', 'hello-yrself.txt'),
-    }).exec({
+    }).switch({
       error: done,
       doesNotExist: done,
       success: function() {
@@ -61,7 +61,7 @@ describe('machinepack-fs :: mv', function() {
     Filesystem.cp({
       source: path.resolve(__dirname, 'fixtures', 'sandbox'),
       destination: path.resolve(__dirname, 'fixtures', 'playbox'),
-    }).exec({
+    }).switch({
       error: done,
       doesNotExist: done,
       success: function() {

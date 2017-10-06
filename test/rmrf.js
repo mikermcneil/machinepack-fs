@@ -18,7 +18,7 @@ describe('machinepack-fs :: rmrf', function() {
 
     Filesystem.rmrf({
       path: path.resolve(__dirname, 'fixtures', 'sandbox')
-    }).exec({
+    }).switch({
       error: done,
       success: function() {
         // Verify that the directory was removec

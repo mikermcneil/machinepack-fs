@@ -48,7 +48,7 @@ module.exports = {
   //
   // require('./').readStream({
   //   source: './README.md'
-  // }).exec({
+  // }).switch({
   //   error: function (err){console.error('Error getting readable stream:',err);},
   //   success: function(stream) {
   //     require('./').writeStream({
