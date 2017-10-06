@@ -8,7 +8,6 @@ describe('machinepack-fs :: read-stream', function() {
 
   it('should be able to get a stream when called on a valid file', function(done) {
 
-    console.log('path:',path.resolve(__dirname, 'fixtures', 'files', 'hello.txt'));
     Filesystem.readStream({
       source: path.resolve(__dirname, 'fixtures', 'files', 'hello.txt')
     }).switch({
@@ -20,12 +19,24 @@ describe('machinepack-fs :: read-stream', function() {
         return done('Expected to return through `success` exit, but triggered `isDirectory` instead!');
       },
       success: function(stream) {
-        var contents = stream.read();
-        // var contents2 = stream.read();
-        // var contents3 = stream.read();
-        // console.log('!!',stream, contents, contents2, contents3);
-        assert.equal(contents, 'hello wurld!');
-        return done();
+
+        var contents = '';
+        stream.on('readable', function(){
+          var chunk;
+          do {
+            chunk = stream.read();
+            if (chunk) {
+              contents += chunk;
+            }
+          } while (chunk !== null);
+
+        });//æ
+        stream.once('end', function(){
+          stream.removeAllListeners('readable');
+          stream.removeAllListeners('error');
+          assert.equal(contents, 'hello wurld!');
+          return done();
+        });//æ
       }
     });
 
