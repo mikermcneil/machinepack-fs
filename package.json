@@ -3,12 +3,16 @@
   "version": "9.0.0-0",
   "description": "Work with the local filesystem; list files, write files, etc.",
   "scripts": {
-    "test": "mocha tests/** -R spec"
+    "custom-tests": "mocha test/** -R spec",
+    "lint": "node ./node_modules/eslint/bin/eslint . --max-warnings=0",
+    "test": "npm run lint && npm run custom-tests"
   },
   "keywords": [
     "machines",
     "machinepack",
-    "filesystem"
+    "filesystem",
+    "fs",
+    "await"
   ],
   "author": "Mike McNeil",
   "license": "MIT",
