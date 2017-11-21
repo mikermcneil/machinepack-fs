@@ -1,8 +1,6 @@
 var assert = require('assert');
-var fsx = require('fs-extra');
-var Filesystem = require('../');
 var path = require('path');
-var _ = require('@sailshq/lodash');
+var Filesystem = require('../');
 
 describe('machinepack-fs :: read', function() {
 
@@ -38,7 +36,7 @@ describe('machinepack-fs :: read', function() {
       isDirectory: function() {
         return done('Expected to return through `doesNotExist` exit, but triggered `isDirectory` instead!');
       },
-      success: function(stream) {
+      success: function() {
         return done('Expected to return through `doesNotExist` exit, but triggered `success` instead!');
       }
     });
@@ -57,7 +55,7 @@ describe('machinepack-fs :: read', function() {
       isDirectory: function() {
         return done();
       },
-      success: function(stream) {
+      success: function() {
         return done('Expected to return through `isDirectory` exit, but triggered `success` instead!');
       }
     });

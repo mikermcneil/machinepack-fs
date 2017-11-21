@@ -93,7 +93,7 @@ module.exports = {
     // • deeper than requested, or
     // • hidden (if the `includeHidden` input is set to false).
     var walker = Walker(inputs.dir);
-    walker.filterDir(function(dir, stat) {
+    walker.filterDir(function(dir/*, stat*/) {
       // Too deep.
       if (dir.split(path.sep).length > (topLvlDirDepth + inputs.depth)) {
         return false;
@@ -111,7 +111,7 @@ module.exports = {
 
     // If `inputs.includeFiles` is `true`, look for files.
     if (inputs.includeFiles) {
-      walker.on('file', function (entry, stat) {
+      walker.on('file', function (entry/*, stat*/) {
         // Add the new entry to our result list unless it is:
         //  • hidden (and the `includeHidden` input is set to false), or
         //  • too deep
@@ -125,7 +125,7 @@ module.exports = {
 
     // If `inputs.includeDirs` is `true`, look for directories.
     if (inputs.includeDirs) {
-      walker.on('dir', function (entry, stat) {
+      walker.on('dir', function (entry/*, stat*/) {
         // If this is the top-level directory, exclude it.
         if (entry === inputs.dir) { return; }
         // Add the new entry to our result list unless it is:
@@ -139,7 +139,7 @@ module.exports = {
 
     // If `inputs.includeSymlinks` is `true`, look for symbolic links.
     if (inputs.includeSymlinks) {
-      walker.on('symlink', function (entry, stat) {
+      walker.on('symlink', function (entry/*, stat*/) {
         // If this is the top-level directory, exclude it.
         if (entry===inputs.dir) { return; }
         // Add the new entry to our result list unless it is:

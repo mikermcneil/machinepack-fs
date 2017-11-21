@@ -1,7 +1,6 @@
-var assert = require('assert');
+var path = require('path');
 var fsx = require('fs-extra');
 var Filesystem = require('../');
-var path = require('path');
 
 describe('machinepack-fs :: ensureDir', function() {
 

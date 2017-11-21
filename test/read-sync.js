@@ -1,8 +1,6 @@
 var assert = require('assert');
-var fsx = require('fs-extra');
 var Filesystem = require('../');
 var path = require('path');
-var _ = require('@sailshq/lodash');
 
 describe('machinepack-fs :: readSync', function() {
 
@@ -23,7 +21,7 @@ describe('machinepack-fs :: readSync', function() {
     try {
       Filesystem.readSync({
         source: path.resolve(__dirname, 'fixtures', 'files', 'helloxxx.txt')
-      }).execSync();
+      }).now();
       throw new Error('Should have triggered `doesNotExist` exit, instead triggered `success`!');
     } catch (e) {
       if (!e.exit || e.exit !== 'doesNotExist') {
@@ -36,7 +34,7 @@ describe('machinepack-fs :: readSync', function() {
   it('should trigger its `isDirectory` exit when called for a directory', function() {
 
     try {
-      var contents = Filesystem.readSync({
+      Filesystem.readSync({
         source: path.resolve(__dirname, 'fixtures', 'files')
       }).execSync();
       throw new Error('Should have triggered `isDirectory` exit, instead triggered `success`!');

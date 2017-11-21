@@ -1,4 +1,3 @@
-var assert = require('assert');
 var fsx = require('fs-extra');
 var Filesystem = require('../');
 var path = require('path');

@@ -1,7 +1,7 @@
 var assert = require('assert');
+var path = require('path');
 var fsx = require('fs-extra');
 var Filesystem = require('../');
-var path = require('path');
 var _ = require('@sailshq/lodash');
 
 describe('machinepack-fs :: ls', function() {

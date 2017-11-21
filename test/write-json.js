@@ -7,11 +7,11 @@ var _ = require('@sailshq/lodash');
 describe('machinepack-fs :: write-json', function() {
 
   before(function() {
-    fsx.ensureFileSync(path.resolve(__dirname, 'fixtures' ,'sandbox', 'foo.txt'));
+    fsx.ensureFileSync(path.resolve(__dirname, 'fixtures', 'sandbox', 'foo.txt'));
   });
 
   after(function() {
-    fsx.removeSync(path.resolve(__dirname, 'fixtures' ,'sandbox'));
+    fsx.removeSync(path.resolve(__dirname, 'fixtures', 'sandbox'));
   });
 
   it('should trigger the `alreadyExists` exit when the `destination` exists and `force` is false', function(done) {
@@ -22,7 +22,7 @@ describe('machinepack-fs :: write-json', function() {
         abc: 123,
         bool: true,
         dict: {
-            key: 'val'
+          key: 'val'
         },
         array: [1, 2, 3]
       }
@@ -45,7 +45,7 @@ describe('machinepack-fs :: write-json', function() {
         abc: 123,
         bool: true,
         dict: {
-            key: 'val'
+          key: 'val'
         },
         array: [1, 2, 3]
       },
@@ -59,7 +59,7 @@ describe('machinepack-fs :: write-json', function() {
           abc: 123,
           bool: true,
           dict: {
-              key: 'val'
+            key: 'val'
           },
           array: [1, 2, 3]
         }));
@@ -79,7 +79,7 @@ describe('machinepack-fs :: write-json', function() {
         abc: 123,
         bool: true,
         dict: {
-            key: 'val'
+          key: 'val'
         },
         array: [1, 2, 3]
       }
@@ -92,11 +92,12 @@ describe('machinepack-fs :: write-json', function() {
           abc: 123,
           bool: true,
           dict: {
-              key: 'val'
+            key: 'val'
           },
           array: [1, 2, 3]
         }));
-        return done();      },
+        return done();
+      },
       alreadyExists: function() {
         return done('Expected to return through `success` exit, but triggered `alreadyExists` instead!');
       }

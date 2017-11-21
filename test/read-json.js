@@ -1,8 +1,7 @@
 var assert = require('assert');
-var fsx = require('fs-extra');
-var Filesystem = require('../');
 var path = require('path');
 var _ = require('@sailshq/lodash');
+var Filesystem = require('../');
 
 describe('machinepack-fs :: read-json', function() {
 
@@ -36,7 +35,7 @@ describe('machinepack-fs :: read-json', function() {
           abc: 123,
           bool: true,
           dict: {
-              key: 'val'
+            key: 'val'
           },
           array: [1, 2, 3]
         }));
@@ -69,7 +68,7 @@ describe('machinepack-fs :: read-json', function() {
       isDirectory: function() {
         return done('Expected to return through `doesNotExist` exit, but triggered `isDirectory` instead!');
       },
-      success: function(data) {
+      success: function() {
         return done('Expected to return through `doesNotExist` exit, but triggered `success` instead!');
       }
     });
@@ -98,7 +97,7 @@ describe('machinepack-fs :: read-json', function() {
       isDirectory: function() {
         return done('Expected to return through `couldNotParse` exit, but triggered `isDirectory` instead!');
       },
-      success: function(data) {
+      success: function() {
         return done('Expected to return through `couldNotParse` exit, but triggered `success` instead!');
       }
     });
@@ -127,7 +126,7 @@ describe('machinepack-fs :: read-json', function() {
       isDirectory: function() {
         return done();
       },
-      success: function(data) {
+      success: function() {
         return done('Expected to return through `isDirectory` exit, but triggered `success` instead!');
       }
     });

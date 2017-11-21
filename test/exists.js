@@ -1,7 +1,6 @@
 var assert = require('assert');
-var fsx = require('fs-extra');
-var Filesystem = require('../');
 var path = require('path');
+var Filesystem = require('../');
 
 describe('machinepack-fs :: exists', function() {
 
