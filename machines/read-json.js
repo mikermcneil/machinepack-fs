@@ -19,14 +19,6 @@ module.exports = {
       description: 'Absolute path to the source file (if relative path is provided, will resolve path from current working directory).',
       example: '/Users/mikermcneil/.tmp/foo.json',
       required: true
-    },
-
-    schema: {
-      friendlyName: 'Example result',
-      description: 'An example schema (in RTTC exemplar syntax) describing what the parsed data should look like (used for type-coercion).',
-      moreInfoUrl: 'https://github.com/node-machine/rttc#types--terminology',
-      defaultsTo: '*',
-      isExemplar: true
     }
 
   },
@@ -35,11 +27,9 @@ module.exports = {
   exits: {
 
     success: {
-      outputFriendlyName: 'JSON file data',
-      outputDescription: 'The parsed JSON data from the source file.',
-      getExample: function (inputs){
-        return inputs.schema;
-      }
+      outputFriendlyName: 'JSON data',
+      outputDescription: 'The JSON data parsed from the source file.',
+      outputType: 'json'
     },
 
     doesNotExist: {
@@ -59,9 +49,6 @@ module.exports = {
 
   fn: function (inputs, exits) {
 
-    // Import `machinepack-json`.
-    var Json = require('machinepack-json');
-
     // Import this pack.
     var Filesystem = require('../');
 
@@ -76,20 +63,17 @@ module.exports = {
       // If the file was successfully read...
       success: function (contents){
         // Attempt to parse the file contents as JSON.
-        Json.parse({
-          json: contents,
-          schema: inputs.schema
-        }).exec({
-          // Forward errors through the appropriate exits.
-          error: exits.error,
-          couldNotParse: exits.couldNotParse,
-          // If the data was successfully parsed, push it through our `success` exit.
-          success: function (parsedData){
-            return exits.success(parsedData);
-          }
-        });
+        var parsedData;
+        try {
+          parsedData = JSON.parse(contents);
+        } catch (err) {
+          return exits.couldNotParse(err);
+        }
+
+        // If the data was successfully parsed, push it through our `success` exit.
+        return exits.success(parsedData);
       }
-    });
+    });//_∏_
   }
 
 

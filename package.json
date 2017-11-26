@@ -19,8 +19,6 @@
   "dependencies": {
     "fs-extra": "0.30.0",
     "machine": "^15.0.0-12",
-    "machinepack-json": "^2.0.0",
-    "rttc": "^9.3.0",
     "walker": "1.0.7"
   },
   "devDependencies": {
