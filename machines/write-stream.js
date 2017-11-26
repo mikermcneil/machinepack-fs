@@ -63,10 +63,6 @@ module.exports = {
     // Import `path`
     var path = require('path');
 
-    // Import Lodash `isFunction` and `isObject` methods.
-    var isFunction = require('lodash.isfunction');
-    var isObject = require('lodash.isobject');
-
     // Import `fs-extra`.
     var fsx = require('fs-extra');
 
@@ -74,7 +70,7 @@ module.exports = {
     var Filesystem = require('../');
 
     // Check for the methods we need on the provided Readable source stream.
-    if (!isObject(inputs.sourceStream) || !isFunction(inputs.sourceStream.pipe) || !isFunction(inputs.sourceStream.on)) {
+    if (!inputs.sourceStream || typeof inputs.sourceStream !== 'object' || typeof inputs.sourceStream.pipe !== 'function' || typeof inputs.sourceStream.on !== 'function') {
       // If the give `sourceStream` is invalid, leave through the `error` exit.
       return exits.error(new Error('Invalid stream provided (has no `.pipe()` and/or `.on()` methods).'));
     }
