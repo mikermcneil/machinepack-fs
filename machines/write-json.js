@@ -15,15 +15,15 @@ module.exports = {
 
   inputs: {
 
-    json: {
-      example: '*',
-      description: 'The data to write to disk as JSON.',
-      required: true
-    },
-
     destination: {
       example: '/Users/mikermcneil/.tmp/bar.json',
       description: 'Absolute path for the destination file (if relative path is provided, will resolve path from current working directory).',
+      required: true
+    },
+
+    json: {
+      example: '*',
+      description: 'The data to write to disk as JSON.',
       required: true
     },
 

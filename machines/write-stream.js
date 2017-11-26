@@ -9,16 +9,16 @@ module.exports = {
 
   inputs: {
 
+    destination: {
+      example: '/Users/mikermcneil/.tmp/bar.json',
+      description: 'Absolute path for the destination file (if relative path is provided, will resolve path from current working directory).',
+      required: true
+    },
+
     sourceStream: {
       description: 'The source (Readable) stream whose contents will be pumped to disk.',
       extendedDescription: 'Must be a utf8-encoded, modern (streams2 or streams3) Readable stream.',
       example: '===',
-      required: true
-    },
-
-    destination: {
-      example: '/Users/mikermcneil/.tmp/bar.json',
-      description: 'Absolute path for the destination file (if relative path is provided, will resolve path from current working directory).',
       required: true
     },
 

@@ -18,16 +18,16 @@ module.exports = {
 
   inputs: {
 
-    string: {
-      description: 'Text to write to the file (if omitted, will create an empty file).',
-      example: 'lots of words, utf8 things you know',
-      defaultsTo: ''
-    },
-
     destination: {
       description: 'Path (relative or absolute) to the file to write.',
       example: '/Users/mikermcneil/.tmp/bar',
       required: true
+    },
+
+    string: {
+      description: 'Text to write to the file (if omitted, will create an empty file).',
+      example: 'lots of words, utf8 things you know',
+      defaultsTo: ''
     },
 
     force: {
