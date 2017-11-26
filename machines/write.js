@@ -12,21 +12,22 @@ module.exports = {
 
   inputs: {
 
-    string: {
-      description: 'Text to write to the file (if omitted, will create an empty file).',
-      example: 'lots of words, utf8 things you know',
-      defaultsTo: ''
-    },
-
     destination: {
       description: 'Path (relative or absolute) to the file to write.',
       example: '/Users/mikermcneil/.tmp/bar',
       required: true
     },
 
+    string: {
+      description: 'The data to write to the file as text (if omitted, will create an empty file).',
+      type: 'string',
+      example: 'lots of words, utf8 things you know',
+      defaultsTo: ''
+    },
+
     force: {
-      description: 'Overwrite files or directories which might exist at or within the specified destination path?',
-      example: false,
+      description: 'Overwrite files or directories which might exist at (or within) the destination path?',
+      type: 'boolean',
       defaultsTo: false
     }
 
