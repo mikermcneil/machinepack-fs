@@ -5,19 +5,10 @@ var Filesystem = require('../');
 
 describe('machinepack-fs :: read-json', function() {
 
-  it('should be able to read a valid json file and parse it to the given schema', function(done) {
+  it('should be able to read a valid json file and parse it', function(done) {
 
     Filesystem.readJson({
       source: path.resolve(__dirname, 'fixtures', 'jsonfile.json'),
-      schema: {
-        foo: 'string',
-        abc: 5,
-        bool: false,
-        dict: {
-          key: 'something'
-        },
-        array: [99]
-      }
     }).switch({
       error: done,
       doesNotExist: function() {
@@ -47,16 +38,7 @@ describe('machinepack-fs :: read-json', function() {
 
   it('should trigger its `doesNotExist` exit when called for a non-existent file', function(done) {
     Filesystem.readJson({
-      source: path.resolve(__dirname, 'fixtures', 'jsonfilexxx.json'),
-      schema: {
-        foo: 'string',
-        abc: 5,
-        bool: false,
-        dict: {
-          key: 'something'
-        },
-        array: [99]
-      }
+      source: path.resolve(__dirname, 'fixtures', 'jsonfilexxx.json')
     }).switch({
       error: done,
       doesNotExist: function() {
@@ -77,15 +59,6 @@ describe('machinepack-fs :: read-json', function() {
   it('should trigger its `couldNotParse` exit when called for a non-json file', function(done) {
     Filesystem.readJson({
       source: path.resolve(__dirname, 'fixtures', 'files', 'alicemoji.png'),
-      schema: {
-        foo: 'string',
-        abc: 5,
-        bool: false,
-        dict: {
-          key: 'something'
-        },
-        array: [99]
-      }
     }).switch({
       error: done,
       doesNotExist: function() {
@@ -106,15 +79,6 @@ describe('machinepack-fs :: read-json', function() {
   it('should trigger its `isDirectory` exit when called for a directory', function(done) {
     Filesystem.readJson({
       source: path.resolve(__dirname, 'fixtures', 'files'),
-      schema: {
-        foo: 'string',
-        abc: 5,
-        bool: false,
-        dict: {
-          key: 'something'
-        },
-        array: [99]
-      }
     }).switch({
       error: done,
       doesNotExist: function() {
