@@ -66,6 +66,9 @@ module.exports = {
     // Import `fs-extra`.
     var fsx = require('fs-extra');
 
+    // Import our little private utility.
+    var pipeSafe = require('../lib/private/pipe-safe');
+
     // Import this pack
     var Filesystem = require('../');
 
@@ -184,10 +187,20 @@ module.exports = {
         });//Œ
 
 
-
         // Now actually pipe the thing:
-        inputs.sourceStream.pipe(writeDrain);
-        // TODO: do it raw instead
+        pipeSafe(inputs.sourceStream, writeDrain, function(err) {
+          if (hasAlreadyCalledExit) { return; }
+          hasAlreadyCalledExit = true;
+          inputs.sourceStream.removeListener('error', $onReadError);
+
+          console.log('piped');
+          if (err) {
+            return exits.error(err);
+          } else {
+            return exits.success();
+          }
+
+        });//_∏_
 
       });//</after _deleteExistingFilesAndOrDirsIfNecessary>
     });//</Filesystem.exists()>
