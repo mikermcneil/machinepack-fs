@@ -44,20 +44,6 @@ module.exports = {
   },
 
 
-  // To test:
-  //
-  // require('./').readStream({
-  //   source: './README.md'
-  // }).switch({
-  //   error: function (err){console.error('Error getting readable stream:',err);},
-  //   success: function(stream) {
-  //     require('./').writeStream({
-  //       destination: './experiment.md',
-  //       sourceStream: stream,
-  //       force: true
-  //     }).exec(console.log);
-  //   }
-  // });
   fn: function(inputs, exits) {
 
     // Import `path`
