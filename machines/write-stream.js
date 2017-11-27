@@ -114,12 +114,8 @@ module.exports = {
         // This is where the content will go.
         var writeDrain = fsx.createWriteStream(inputs.destination);
 
-        // Pipe the source stream down the drain.
-        //
-        // Note that since we're using `createOutputStream()`, the necessary
-        // directory hierarchy leading to the destination will be created if
-        // it does not already exist.
-        //
+        // Now bind error handlers.
+
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         // Note that the native "pipe" method because it is not always well-behaved.
         // For more info on that, see:
@@ -131,12 +127,21 @@ module.exports = {
         // • https://github.com/request/request/issues/887#issuecomment-347050137
         //
         // But unfortunately, that doesn't work.  At least not for the `request` pkg.
-        // So instead we do two things here:
+        // So instead we next tried doing two things here:
         // 1. Treat any read stream errors as fatal so they're actually visible on the
         //    console (carefully managing our spinlocks along the way).
         // 2. Don't use the native `.pipe()`-- this at least prevents the naughty
         //    `on('pipe')` code in `request` from triggering.
+        //
+        // …but while #1 worked great, #2 still had some problems.
+        //
+        // See 6ea9378fb5ec7798d0076ce5225dc5d52093ad87 and 9efb5a41d7c1650158c61a955bc88453eeb25c85
+        // in this repo for more about using the alternative to `.pipe()`.
+        // Eventually, we ended up just leaving things simple and relying on
+        // accepting only good, well-behaved streams.
+        // (There is just too much messiness to take care of re: backpressure)
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
         // (Note: This is a standalone declarations because we use a reference to it again
         // below as we clean up.)
         var $onReadError;
@@ -187,20 +192,8 @@ module.exports = {
         });//Œ
 
 
-        // Now actually pipe the thing:
-        pipeSafe(inputs.sourceStream, writeDrain, function(err) {
-          if (hasAlreadyCalledExit) { return; }
-          hasAlreadyCalledExit = true;
-          inputs.sourceStream.removeListener('error', $onReadError);
-
-          console.log('piped');
-          if (err) {
-            return exits.error(err);
-          } else {
-            return exits.success();
-          }
-
-        });//_∏_
+        // Pipe the source stream down the drain.
+        inputs.sourceStream.pipe(writeDrain);
 
       });//</after _deleteExistingFilesAndOrDirsIfNecessary>
     });//</Filesystem.exists()>
