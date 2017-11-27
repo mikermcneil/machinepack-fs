@@ -66,9 +66,6 @@ module.exports = {
     // Import `fs-extra`.
     var fsx = require('fs-extra');
 
-    // Import our little private utility.
-    var pipeSafe = require('../lib/private/pipe-safe');
-
     // Import this pack
     var Filesystem = require('../');
 
