@@ -134,8 +134,8 @@ module.exports = {
         // 2. Don't use the native `.pipe()`-- this at least prevents the naughty
         //    `on('pipe')` code in `request` from triggering.
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-        // (Note: The $-prefixed functions are standalone declarations because we use
-        // references to them again below as we clean up.)
+        // (Note: This is a standalone declarations because we use a reference to it again
+        // below as we clean up.)
         var $onReadError;
         $onReadError = function(err) {
 
