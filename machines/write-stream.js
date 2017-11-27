@@ -113,6 +113,17 @@ module.exports = {
         // Note that since we're using `createOutputStream()`, the necessary
         // directory hierarchy leading to the destination will be created if
         // it does not already exist.
+        //
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        // Note that the native "pipe" method because it is not always well-behaved.
+        // For more info on that, see:
+        // • https://github.com/mikermcneil/machinepack-http/commit/6097c788cf484438b309d9925a56b701f4510a29
+        // • https://github.com/sailshq/machinepack-strings/commit/0fd94b1603834503554888becd1965583b93ac04
+        //
+        // But we managed to get around it without having to change anything in
+        // stream consumer methods, by implementing the fix suggested here:
+        // • https://github.com/request/request/issues/887#issuecomment-347050137
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         inputs.sourceStream.pipe(writeDrain);
 
         // Handle write errors.
