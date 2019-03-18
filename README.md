@@ -11,7 +11,7 @@ Work with the local filesystem; list files, write files, etc.
 ## Installation &nbsp; [![NPM version](https://badge.fury.io/js/machinepack-fs.svg)](http://badge.fury.io/js/machinepack-fs) [![Build Status](https://travis-ci.org/mikermcneil/machinepack-fs.png?branch=master)](https://travis-ci.org/mikermcneil/machinepack-fs)
 
 ```sh
-$ npm install machinepack-fs --save --save-exact
+$ npm install machinepack-fs
 ```
 
 ## Usage
